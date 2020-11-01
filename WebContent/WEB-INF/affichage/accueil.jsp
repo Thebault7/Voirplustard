@@ -11,7 +11,7 @@
 	<h1>Page d'accueil de Voirplustard</h1>
 	<br>
 	<div>
-		<form method="post" action="ServletConnexionUtilisateur">
+		<form method="post" action="ConnexionUtilisateur">
 			<div>
 				<label for="emailUtilisateur">Identifiant</label>
 				<input type="email" id="emailUtilisateur" placeholder="Entrez un identifiant" name="nomUtilisateur"/>
@@ -25,7 +25,7 @@
 				<span class="pull-right"><a href="">Mot de passe oublié</a></span>
 			</div>
 		</form>
-		<form method="get" action="ServletConnexionUtilisateur">
+		<form method="get" action="ConnexionUtilisateur">
 			<div>
 				<button type="submit" name="nouveauCompte">S'inscrire</button>
 			</div>
