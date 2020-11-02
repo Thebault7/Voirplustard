@@ -9,11 +9,12 @@ public class Utilisateur implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private int numeroUtilisateur;
+	private int idUtilisateur;
 	private String identifiant;
 	private String email;
 	private String motDePasse;
 	private boolean administrateur;
+	private boolean actif;
 	
 	public Utilisateur() {
 	}
@@ -33,22 +34,33 @@ public class Utilisateur implements Serializable {
 		this.administrateur = administrateur;
 	}
 
-	public Utilisateur(int numeroUtilisateur, String identifiant, String email, String motDePasse,
+	public Utilisateur(int idUtilisateur, String identifiant, String email, String motDePasse,
 			boolean administrateur) {
 		super();
-		this.numeroUtilisateur = numeroUtilisateur;
+		this.idUtilisateur = idUtilisateur;
 		this.identifiant = identifiant;
 		this.email = email;
 		this.motDePasse = motDePasse;
 		this.administrateur = administrateur;
 	}
 
-	public int getNumeroUtilisateur() {
-		return numeroUtilisateur;
+	public Utilisateur(int idUtilisateur, String identifiant, String email, String motDePasse, boolean administrateur,
+			boolean actif) {
+		super();
+		this.idUtilisateur = idUtilisateur;
+		this.identifiant = identifiant;
+		this.email = email;
+		this.motDePasse = motDePasse;
+		this.administrateur = administrateur;
+		this.actif = actif;
 	}
 
-	public void setNumeroUtilisateur(int numeroUtilisateur) {
-		this.numeroUtilisateur = numeroUtilisateur;
+	public int getIdUtilisateur() {
+		return idUtilisateur;
+	}
+
+	public void setIdUtilisateur(int idUtilisateur) {
+		this.idUtilisateur = idUtilisateur;
 	}
 
 	public String getIdentifiant() {
@@ -83,9 +95,17 @@ public class Utilisateur implements Serializable {
 		this.administrateur = administrateur;
 	}
 
+	public boolean isActif() {
+		return actif;
+	}
+
+	public void setActif(boolean actif) {
+		this.actif = actif;
+	}
+
 	@Override
 	public String toString() {
-		return "Utilisateur [numeroUtilisateur=" + numeroUtilisateur + ", identifiant=" + identifiant + ", email="
+		return "Utilisateur [numeroUtilisateur=" + idUtilisateur + ", identifiant=" + identifiant + ", email="
 				+ email + ", motDePasse=" + motDePasse + ", administrateur=" + administrateur + "]";
 	}
 }

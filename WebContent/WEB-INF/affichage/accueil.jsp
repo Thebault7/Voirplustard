@@ -22,7 +22,7 @@
 			</div>
 			<div>
 				<button type="submit">Se connecter</button>
-				<span class="pull-right"><a href="">Mot de passe oublié</a></span>
+				<a href="">Mot de passe oublié</a>
 			</div>
 		</form>
 		<form method="get" action="ConnexionUtilisateur">
@@ -31,5 +31,40 @@
 			</div>
 		</form>
 	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<br><hr><br>
+	<div>
+		<a href="#" onclick="ajaxFonction()">ajax</a>
+	</div>
+	<h1 id="textici"></h1>
 </body>
+
+<script type="text/javascript">
+	function ajaxFonction() {
+		var url = "https://api.dailymotion.com/videos?fields=title%2Clanguage%2Cchannel.name%2Cduration%2Cowner.screenname&page=1&limit=3&search=html&languages=fr";
+		var addressRequest = new XMLHttpRequest();
+		addressRequest.open('GET', url);
+		addressRequest.onload = function() {
+			console.log(addressRequest.responseText);
+			if (addressRequest.status >= 200 && addressRequest.status < 400) {
+				var addressData = JSON.parse(addressRequest.responseText);
+				document.getElementById("textici").innerHTML = addressData['list'][1]['channel.name'];
+			} else {
+				alert("Pas de page à afficher");
+			};	
+		};
+		addressRequest.onerror = function() {
+			alert('autre erreur');
+		};
+		addressRequest.send();
+	}
+</script>
 </html>

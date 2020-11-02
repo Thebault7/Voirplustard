@@ -10,7 +10,7 @@
 <body>
 	<h1>Création d'un nouveau compte utilisateur</h1>
 	<div>
-		<form method="post" action="ServletCreationCompte">
+		<form method="post" action="CreationCompte">
 			<div>
 				<label for="emailNouvelUtilisateur">Email</label>
 				<input type="email" id="emailNouvelUtilisateur" placeholder="Entrez un email" name="emailNouvelUtilisateur"/>
@@ -23,6 +23,12 @@
 				<label for="passwordNouvelUtilisateur">Mot de passe</label>
 				<input type="password" id="passwordNouvelUtilisateur" placeholder="Entrez un mot de passe" name="passwordNouvelUtilisateur"/>
 			</div>
+			<div>
+				<button type="submit" name="nouveauCompte">Enregistrer</button>
+			</div>
+		</form>
+		<form method="get" action="Accueil">
+			<button type="submit" name="retourAccueil">Annuler</button>
 		</form>
 	</div>
 </body>
