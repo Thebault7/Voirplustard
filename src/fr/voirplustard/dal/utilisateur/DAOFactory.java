@@ -1,4 +1,4 @@
-package fr.voirplustard.dal;
+package fr.voirplustard.dal.utilisateur;
 
 public abstract class DAOFactory {
 

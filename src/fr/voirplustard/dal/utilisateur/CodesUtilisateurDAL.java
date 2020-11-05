@@ -1,4 +1,4 @@
-package fr.voirplustard.dal;
+package fr.voirplustard.dal.utilisateur;
 
 /**
  * Les codes disponibles sont entre 10000 et 19999

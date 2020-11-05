@@ -33,8 +33,6 @@ public class ServletConnexionUtilisateur extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/affichage/creerNouveauCompte.jsp");
-		Utilisateur utilisateur = new Utilisateur();
-		request.setAttribute("utilisateur", utilisateur);
 		rd.forward(request, response);
 	}
 

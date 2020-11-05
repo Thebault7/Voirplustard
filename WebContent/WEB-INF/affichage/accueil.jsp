@@ -5,7 +5,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Insert title here</title>
+	<title>Page d'accueil</title>
 </head>
 <body>
 	<h1>Page d'accueil de Voirplustard</h1>
@@ -38,7 +38,7 @@
 	
 	
 	
-	
+
 	
 	<br><hr><br>
 	<div>
@@ -53,7 +53,7 @@
 		var addressRequest = new XMLHttpRequest();
 		addressRequest.open('GET', url);
 		addressRequest.onload = function() {
-			console.log(addressRequest.responseText);
+//			console.log(addressRequest.responseText);
 			if (addressRequest.status >= 200 && addressRequest.status < 400) {
 				var addressData = JSON.parse(addressRequest.responseText);
 				document.getElementById("textici").innerHTML = addressData['list'][1]['channel.name'];

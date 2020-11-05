@@ -24,11 +24,15 @@
 				<input type="password" id="passwordNouvelUtilisateur" placeholder="Entrez un mot de passe" name="passwordNouvelUtilisateur"/>
 			</div>
 			<div>
-				<button type="submit" name="nouveauCompte">Enregistrer</button>
+				<label for="confirmationPasswordNouvelUtilisateur">Mot de passe</label>
+				<input type="password" id="confirmationPasswordNouvelUtilisateur" placeholder="Entrez à nouveau le mot de passe" name="confirmationPasswordNouvelUtilisateur"/>
+			</div>
+			<div>
+				<button type="submit" value="Creer">Enregistrer</button>
 			</div>
 		</form>
 		<form method="get" action="Accueil">
-			<button type="submit" name="retourAccueil">Annuler</button>
+			<button type="submit" value="annuler">Annuler</button>
 		</form>
 	</div>
 </body>
