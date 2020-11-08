@@ -53,7 +53,7 @@
 					<%if (request.getAttribute("emailNouvelUtilisateur") == null) {%>
 					placeholder="Entrez un email" <%} else {%>
 					value="<%=request.getAttribute("emailNouvelUtilisateur")%>" <%}%>
-					name="emailNouvelUtilisateur" />
+					name="emailNouvelUtilisateur" required />
 			</div>
 			<div>
 				<label for="identifiantNouvelUtilisateur">Pseudonyme</label> <input
@@ -61,20 +61,20 @@
 					<%if (request.getAttribute("identifiantNouvelUtilisateur") == null) {%>
 					placeholder="Entrez un pseudonyme" <%} else {%>
 					value="<%=request.getAttribute("identifiantNouvelUtilisateur")%>"
-					<%}%> name="identifiantNouvelUtilisateur" />
+					<%}%> name="identifiantNouvelUtilisateur" required />
 			</div>
 			<div>
 				<label for="passwordNouvelUtilisateur">Mot de passe</label> <input
 					type="password" id="passwordNouvelUtilisateur"
 					placeholder="Entrez un mot de passe"
-					name="passwordNouvelUtilisateur" />
+					name="passwordNouvelUtilisateur" required />
 			</div>
 			<div>
 				<label for="confirmationPasswordNouvelUtilisateur">Confirmation
 					du mot de passe</label> <input type="password"
 					id="confirmationPasswordNouvelUtilisateur"
 					placeholder="Entrez à nouveau le mot de passe"
-					name="confirmationPasswordNouvelUtilisateur" />
+					name="confirmationPasswordNouvelUtilisateur" required />
 			</div>
 			<div>
 				<button type="submit" value="Creer">Enregistrer</button>

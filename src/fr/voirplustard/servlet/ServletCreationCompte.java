@@ -60,9 +60,6 @@ public class ServletCreationCompte extends HttpServlet {
 			request.setAttribute("erreurFormulaire", "Formulaire incomplet");
 			request.setAttribute("emailNouvelUtilisateur", request.getParameter("emailNouvelUtilisateur"));
 			request.setAttribute("identifiantNouvelUtilisateur", request.getParameter("identifiantNouvelUtilisateur"));
-//			request.setAttribute("passwordNouvelUtilisateur", request.getParameter("passwordNouvelUtilisateur"));
-//			request.setAttribute("confirmationPasswordNouvelUtilisateur",
-//					request.getParameter("confirmationPasswordNouvelUtilisateur"));
 			rd = request.getRequestDispatcher("/WEB-INF/affichage/creerNouveauCompte.jsp");
 			rd.forward(request, response);
 			return;
@@ -137,6 +134,9 @@ public class ServletCreationCompte extends HttpServlet {
 			try {
 				int idUtilisateur = um.ajouter(utilisateur);
 				utilisateur.setIdUtilisateur(idUtilisateur);
+				utilisateur.setIdentifiant(identifiant);
+				utilisateur.setEmail(email);
+				utilisateur.setMotDePasse(motDePasse);
 			} catch (SQLException e) {
 				System.out.println("Erreur de connexion avec la base de données.");
 				e.printStackTrace();

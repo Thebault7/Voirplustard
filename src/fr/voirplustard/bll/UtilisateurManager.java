@@ -39,4 +39,9 @@ public class UtilisateurManager {
 	public int ajouter(Utilisateur utilisateur) throws SQLException, BusinessException, Exception {
 		return this.utilisateurDAO.ajouterUtilisateur(utilisateur);
 	}
+
+	public Utilisateur verifierIdentifiantEtEmail(String identifiantEncode, String motDePasseHache)
+			throws SQLException, BusinessException, Exception {
+		return this.utilisateurDAO.verifierIdentifiantEtEmail(identifiantEncode, motDePasseHache);
+	}
 }

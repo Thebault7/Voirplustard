@@ -14,36 +14,57 @@
 	<div>
 		<%
 			if (session.getAttribute("utilisateur") != null) {
-		%><p>
-			Bonjour, vous êtes connecté en tant que "<c:out value="${sessionScope.utilisateur.identifiant}"/>"
+		%>
+		<p>
+			Bonjour, vous êtes connecté en tant que "
+			<c:out value="${sessionScope.utilisateur.identifiant}" />
+			"
 		</p>
+		<%
+			} else {
+		%>
+		<div>
+			<form method="post" action="ConnexionUtilisateur">
+				<%
+					if (request.getAttribute("erreurConnexion") != null) {
+				%>
+				<c:out value="${erreurConnexion}" />
+				<%
+					}
+				%>
+				<div>
+					<label for="identifiantUtilisateur">Identifiant</label> <input
+						type="text" id="identifiantUtilisateur"
+						<%if (request.getAttribute("identifiant") == null) {%>
+						placeholder="Entrez un identifiant" <%} else {%>
+						value="<%=request.getAttribute("identifiant")%>" <%}%>
+						name="identifiantUtilisateur" required />
+				</div>
+				<div>
+					<label for="passwordUtilisateur">Mot de passe</label> <input
+						type="password" id="passwordUtilisateur"
+						placeholder="Mot de passe" name="passwordUtilisateur" required />
+				</div>
+				<div>
+					<button type="submit">Se connecter</button>
+					<a href="#">Mot de passe oublié</a>
+				</div>
+			</form>
+			<form method="get" action="ConnexionUtilisateur">
+				<div>
+					<button type="submit" name="nouveauCompte">S'inscrire</button>
+				</div>
+			</form>
+		</div>
 		<%
 			}
 		%>
 	</div>
-	<div>
-		<form method="post" action="ConnexionUtilisateur">
-			<div>
-				<label for="emailUtilisateur">Identifiant</label> <input
-					type="email" id="emailUtilisateur"
-					placeholder="Entrez un identifiant" name="nomUtilisateur" />
-			</div>
-			<div>
-				<label for="passwordUtilisateur">Mot de passe</label> <input
-					type="password" id="passwordUtilisateur" placeholder="Mot de passe"
-					name="passwordUtilisateur" />
-			</div>
-			<div>
-				<button type="submit">Se connecter</button>
-				<a href="">Mot de passe oublié</a>
-			</div>
-		</form>
-		<form method="get" action="ConnexionUtilisateur">
-			<div>
-				<button type="submit" name="nouveauCompte">S'inscrire</button>
-			</div>
-		</form>
-	</div>
+
+
+
+
+
 
 
 

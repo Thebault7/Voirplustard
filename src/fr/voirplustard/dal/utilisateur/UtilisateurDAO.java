@@ -14,4 +14,6 @@ public interface UtilisateurDAO {
 	public int chercherMaxId() throws SQLException, BusinessException;
 
 	public int ajouterUtilisateur(Utilisateur utilisateur) throws SQLException, BusinessException;
+	
+	public Utilisateur verifierIdentifiantEtEmail(String identifiantEncode, String motDePasseHache) throws SQLException, BusinessException;
 }
