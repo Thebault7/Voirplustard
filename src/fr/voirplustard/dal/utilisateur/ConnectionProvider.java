@@ -16,10 +16,12 @@ private static DataSource dataSource;
 	 */
 	static
 	{
+		System.out.println("ConnectionProvider - static constructeur");
 		Context context;
 		try {
 			context = new InitialContext();
 			ConnectionProvider.dataSource = (DataSource)context.lookup("java:comp/env/jdbc/pool_cnx");
+			System.out.println("ConnectionProvider - static constructeur - connection réussie");
 		} catch (NamingException e) {
 			e.printStackTrace();
 			throw new RuntimeException("Impossible d'accéder à la base de données");
@@ -34,6 +36,7 @@ private static DataSource dataSource;
 	 */
 	public static Connection getConnection() throws SQLException
 	{
+		System.out.println("ConnectionProvider - getConnection");
 		return ConnectionProvider.dataSource.getConnection();
 	}
 }

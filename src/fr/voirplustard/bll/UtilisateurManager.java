@@ -11,11 +11,11 @@ public class UtilisateurManager {
 
 	private UtilisateurDAO utilisateurDAO;
 	private static UtilisateurManager instanceUtilisateurManager = null;
-	
+
 	private UtilisateurManager() {
 		this.utilisateurDAO = DAOFactory.getUtilisateurDAO();
 	}
-	
+
 	public static UtilisateurManager getInstance() {
 		if (instanceUtilisateurManager == null) {
 			instanceUtilisateurManager = new UtilisateurManager();
@@ -23,8 +23,17 @@ public class UtilisateurManager {
 		return instanceUtilisateurManager;
 	}
 
-	public Utilisateur selectionnerParIdentifiant(String identifiant) throws SQLException, BusinessException, Exception {
+	public Utilisateur selectionnerParIdentifiant(String identifiant)
+			throws SQLException, BusinessException, Exception {
 		Utilisateur utilisateur = this.utilisateurDAO.selectionnerParIdentifiant(identifiant);
 		return utilisateur;
+	}
+	
+	public int chercherMaxId() throws SQLException, BusinessException, Exception {
+		return this.utilisateurDAO.chercherMaxId();
+	}
+
+	public int ajouter(Utilisateur utilisateur) throws SQLException, BusinessException, Exception {
+		return this.utilisateurDAO.ajouterUtilisateur(utilisateur);
 	}
 }

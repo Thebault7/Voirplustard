@@ -13,7 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import fr.voirplustard.BusinessException;
 import fr.voirplustard.bll.UtilisateurManager;
 import fr.voirplustard.bo.Utilisateur;
-import fr.voirplustard.service.PasswordEncoderGenerator;
+import fr.voirplustard.service.Encodage;
+import fr.voirplustard.service.InterfaceEncodage;
+import fr.voirplustard.service.PasswordHachingGenerator;
 
 /**
  * Servlet implementation class ServletCreationCompte
@@ -89,14 +91,13 @@ public class ServletCreationCompte extends HttpServlet {
 					erreur = true;
 					request.setAttribute("erreurIdentifiant", "identifiantDejaPrit");
 				}
-			} catch (SQLException sqle) {
+			} catch (SQLException e) {
 				System.out.println("Erreur de connexion avec la base de données.");
-				sqle.printStackTrace();
-			} catch (BusinessException be) {
-				be.printStackTrace();
-			} catch (Exception e) {
-				System.out.println("L'identifiant ne figure pas dans la base de données.");
 				e.printStackTrace();
+			} catch (BusinessException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				System.out.println("L'identifiant ne figure pas déjà dans la base de données.");
 			}
 
 			try {
@@ -107,22 +108,41 @@ public class ServletCreationCompte extends HttpServlet {
 					erreur = true;
 					request.setAttribute("erreurEmail", "emailExisteDeja");
 				}
-			} catch (SQLException sqle) {
+			} catch (SQLException e) {
 				System.out.println("Erreur de connexion avec la base de données.");
-				sqle.printStackTrace();
-			} catch (BusinessException be) {
-				be.printStackTrace();
-			} catch (Exception e) {
-				System.out.println("L'email ne figure pas dans la base de données.");
 				e.printStackTrace();
+			} catch (BusinessException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				System.out.println("L'email ne figure pas déjà dans la base de données.");
 			}
 		}
 		
 		// S'il n'y a pas d'erreur, un nouvel utilisateur est créé en base de données
 		if (!erreur) {
 			// hachage du mot de passe
-			PasswordEncoderGenerator peg = new PasswordEncoderGenerator();
-			String motDePasseHache = peg.hashing(motDePasse, identifiant);
+			PasswordHachingGenerator phg = new PasswordHachingGenerator();
+			String motDePasseHache = phg.hashing(motDePasse, identifiant);
+			// encodage de l'identifiant et de l'email
+			InterfaceEncodage ie = new Encodage();
+			String identifiantEncode = ie.crypter(identifiant);
+			String emailEncode = ie.crypter(email);
+			// création d'un nouvel utilisateur
+			Utilisateur utilisateur = new Utilisateur(identifiantEncode, emailEncode, motDePasseHache, false, true);
+			// insertion de ce nouvel utilisateur dans la base de données
+			try {
+				UtilisateurManager um = UtilisateurManager.getInstance();
+				int idUtilisateur = um.ajouter(utilisateur);
+				utilisateur.setIdUtilisateur(idUtilisateur);
+			} catch (SQLException e) {
+				System.out.println("Erreur de connexion avec la base de données.");
+				e.printStackTrace();
+			} catch (BusinessException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				System.out.println("L'utilisateur figure déjà dans la base de données.");
+				e.printStackTrace();
+			}
 		}
 	}
 }

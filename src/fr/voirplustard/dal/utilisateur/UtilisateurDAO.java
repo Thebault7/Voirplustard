@@ -10,4 +10,8 @@ public interface UtilisateurDAO {
 	public Utilisateur selectionnerParEMail(String email) throws SQLException, BusinessException;
 
 	public Utilisateur selectionnerParIdentifiant(String identifiant) throws SQLException, BusinessException;
+	
+	public int chercherMaxId() throws SQLException, BusinessException;
+
+	public int ajouterUtilisateur(Utilisateur utilisateur) throws SQLException, BusinessException;
 }

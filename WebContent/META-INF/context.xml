@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+	<Resource
+			name="jdbc/pool_cnx"
+			auth="Container"
+			type="javax.sql.DataSource"
+			maxTotal="10"
+			maxIdle="3"
+			maxWaitMillis="10000"
+			username="root"
+			password="root"
+			driverClassName="com.mysql.jdbc.Driver"
+			url="jdbc:mysql://localhost/voirplustard"/>
+</Context>

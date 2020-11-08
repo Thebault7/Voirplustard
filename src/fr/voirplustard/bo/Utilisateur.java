@@ -44,6 +44,15 @@ public class Utilisateur implements Serializable {
 		this.administrateur = administrateur;
 	}
 
+	public Utilisateur(String identifiant, String email, String motDePasse, boolean administrateur, boolean actif) {
+		super();
+		this.identifiant = identifiant;
+		this.email = email;
+		this.motDePasse = motDePasse;
+		this.administrateur = administrateur;
+		this.actif = actif;
+	}
+
 	public Utilisateur(int idUtilisateur, String identifiant, String email, String motDePasse, boolean administrateur,
 			boolean actif) {
 		super();

@@ -15,7 +15,7 @@ import javax.crypto.spec.PBEKeySpec;
  * Classe servant à hacher les mots de passe
  *
  */
-public class PasswordEncoderGenerator {
+public class PasswordHachingGenerator {
 
 	public String hashing(String stringToBeHashed, String stringUsedForSalt) {
 		byte[] salt = new byte[16];
