@@ -23,7 +23,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 * @see fr.voirplustard.dal.utilisateur.UtilisateurDAO#selectByEMail(java.lang.String)
 	 */
 	@Override
-	public Utilisateur selectionnerParEMail(String email) throws SQLException {
+	public Utilisateur selectionnerParEmail(String email) throws SQLException {
 		System.out.println("UtilisateurDAOJdbcImpl - selectionnerParEMail");
 		Utilisateur utilisateur = new Utilisateur();
 		try (Connection cnx = ConnectionProvider.getConnection()) {

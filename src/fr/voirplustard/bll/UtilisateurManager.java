@@ -23,12 +23,15 @@ public class UtilisateurManager {
 		return instanceUtilisateurManager;
 	}
 
+	public Utilisateur selectionnerParEmail(String email) throws SQLException, BusinessException, Exception {
+		return this.utilisateurDAO.selectionnerParEmail(email);
+	}
+
 	public Utilisateur selectionnerParIdentifiant(String identifiant)
 			throws SQLException, BusinessException, Exception {
-		Utilisateur utilisateur = this.utilisateurDAO.selectionnerParIdentifiant(identifiant);
-		return utilisateur;
+		return this.utilisateurDAO.selectionnerParIdentifiant(identifiant);
 	}
-	
+
 	public int chercherMaxId() throws SQLException, BusinessException, Exception {
 		return this.utilisateurDAO.chercherMaxId();
 	}

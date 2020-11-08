@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.voirplustard.BusinessException;
 import fr.voirplustard.bll.UtilisateurManager;
@@ -56,12 +57,12 @@ public class ServletCreationCompte extends HttpServlet {
 				|| request.getParameter("identifiantNouvelUtilisateur").contentEquals("")
 				|| request.getParameter("passwordNouvelUtilisateur").contentEquals("")
 				|| request.getParameter("confirmationPasswordNouvelUtilisateur").contentEquals("")) {
-			request.setAttribute("erreurFormulaire", "formulaire incomplet");
+			request.setAttribute("erreurFormulaire", "Formulaire incomplet");
 			request.setAttribute("emailNouvelUtilisateur", request.getParameter("emailNouvelUtilisateur"));
 			request.setAttribute("identifiantNouvelUtilisateur", request.getParameter("identifiantNouvelUtilisateur"));
-			request.setAttribute("passwordNouvelUtilisateur", request.getParameter("passwordNouvelUtilisateur"));
-			request.setAttribute("confirmationPasswordNouvelUtilisateur",
-					request.getParameter("confirmationPasswordNouvelUtilisateur"));
+//			request.setAttribute("passwordNouvelUtilisateur", request.getParameter("passwordNouvelUtilisateur"));
+//			request.setAttribute("confirmationPasswordNouvelUtilisateur",
+//					request.getParameter("confirmationPasswordNouvelUtilisateur"));
 			rd = request.getRequestDispatcher("/WEB-INF/affichage/creerNouveauCompte.jsp");
 			rd.forward(request, response);
 			return;
@@ -79,45 +80,48 @@ public class ServletCreationCompte extends HttpServlet {
 		// vérification que les deux mots de passe fournis se correspondent bien
 		if (!motDePasse.contentEquals(confirmationMotDePasse)) {
 			erreur = true;
-			request.setAttribute("erreurMotDePasse", "echecConfirmation");
-		} else {
-			UtilisateurManager um = UtilisateurManager.getInstance();
-			try {
-				// vérification que l'identifiant fourni n'existe pas déjà dans la base de
-				// données
-				Utilisateur utilisateurVerificationIdentifiant = new Utilisateur();
-				utilisateurVerificationIdentifiant = um.selectionnerParIdentifiant(identifiant);
-				if (utilisateurVerificationIdentifiant.getIdentifiant().equals(identifiant)) {
-					erreur = true;
-					request.setAttribute("erreurIdentifiant", "identifiantDejaPrit");
-				}
-			} catch (SQLException e) {
-				System.out.println("Erreur de connexion avec la base de données.");
-				e.printStackTrace();
-			} catch (BusinessException e) {
-				e.printStackTrace();
-			} catch (Exception e) {
-				System.out.println("L'identifiant ne figure pas déjà dans la base de données.");
-			}
-
-			try {
-				// vérification que l'email n'existe pas déjà dans la base de données
-				Utilisateur utilisateurVerificationEmail = new Utilisateur();
-				utilisateurVerificationEmail = um.selectionnerParIdentifiant(email);
-				if (utilisateurVerificationEmail.getEmail().equals(email)) {
-					erreur = true;
-					request.setAttribute("erreurEmail", "emailExisteDeja");
-				}
-			} catch (SQLException e) {
-				System.out.println("Erreur de connexion avec la base de données.");
-				e.printStackTrace();
-			} catch (BusinessException e) {
-				e.printStackTrace();
-			} catch (Exception e) {
-				System.out.println("L'email ne figure pas déjà dans la base de données.");
-			}
+			request.setAttribute("erreurMotDePasse", "Erreur dans la confirmation du mot de passe.");
 		}
+
+		// instanciation du manager pour accéder à la base de données
+		UtilisateurManager um = UtilisateurManager.getInstance();
 		
+		// vérification que l'identifiant fourni n'existe pas déjà dans la base de
+		// données
+		try {
+			Utilisateur utilisateurVerificationIdentifiant = new Utilisateur();
+			utilisateurVerificationIdentifiant = um.selectionnerParIdentifiant(identifiant);
+			if (utilisateurVerificationIdentifiant.getIdentifiant().equals(identifiant)) {
+				erreur = true;
+				request.setAttribute("erreurIdentifiant",
+						"Cet identifiant est déjà pris. Veuillez en choisir un autre.");
+			}
+		} catch (SQLException e) {
+			System.out.println("Erreur de connexion avec la base de données.");
+			e.printStackTrace();
+		} catch (BusinessException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			System.out.println("L'identifiant ne figure pas déjà dans la base de données.");
+		}
+
+		// vérification que l'email n'existe pas déjà dans la base de données
+		try {
+			Utilisateur utilisateurVerificationEmail = new Utilisateur();
+			utilisateurVerificationEmail = um.selectionnerParEmail(email);
+			if (utilisateurVerificationEmail.getEmail().equals(email)) {
+				erreur = true;
+				request.setAttribute("erreurEmail", "Cet email a déjà été utilisé sur ce site.");
+			}
+		} catch (SQLException e) {
+			System.out.println("Erreur de connexion avec la base de données.");
+			e.printStackTrace();
+		} catch (BusinessException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			System.out.println("L'email ne figure pas déjà dans la base de données.");
+		}
+
 		// S'il n'y a pas d'erreur, un nouvel utilisateur est créé en base de données
 		if (!erreur) {
 			// hachage du mot de passe
@@ -131,7 +135,6 @@ public class ServletCreationCompte extends HttpServlet {
 			Utilisateur utilisateur = new Utilisateur(identifiantEncode, emailEncode, motDePasseHache, false, true);
 			// insertion de ce nouvel utilisateur dans la base de données
 			try {
-				UtilisateurManager um = UtilisateurManager.getInstance();
 				int idUtilisateur = um.ajouter(utilisateur);
 				utilisateur.setIdUtilisateur(idUtilisateur);
 			} catch (SQLException e) {
@@ -143,6 +146,19 @@ public class ServletCreationCompte extends HttpServlet {
 				System.out.println("L'utilisateur figure déjà dans la base de données.");
 				e.printStackTrace();
 			}
+			// l'utilisateur est ajouté à la session
+			HttpSession session = request.getSession();
+			session.setAttribute("utilisateur", utilisateur);
+			// l'utilisateur est ensuite réorienté vers la page d'accueil
+			rd = request.getRequestDispatcher("/WEB-INF/affichage/accueil.jsp");
+			rd.forward(request, response);
+		}
+
+		// s'il y a une erreur dans les données fournies par l'utilisateur, celui-ci est
+		// envoyée vers le formulaire d'inscription avec un message d'erreur à afficher.
+		if (erreur) {
+			rd = request.getRequestDispatcher("/WEB-INF/affichage/creerNouveauCompte.jsp");
+			rd.forward(request, response);
 		}
 	}
 }

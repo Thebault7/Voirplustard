@@ -7,7 +7,7 @@ import fr.voirplustard.bo.Utilisateur;
 
 public interface UtilisateurDAO {
 	
-	public Utilisateur selectionnerParEMail(String email) throws SQLException, BusinessException;
+	public Utilisateur selectionnerParEmail(String email) throws SQLException, BusinessException;
 
 	public Utilisateur selectionnerParIdentifiant(String identifiant) throws SQLException, BusinessException;
 	
