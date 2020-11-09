@@ -4,7 +4,7 @@ import java.sql.SQLException;
 
 import fr.voirplustard.BusinessException;
 import fr.voirplustard.bo.Utilisateur;
-import fr.voirplustard.dal.utilisateur.DAOFactory;
+import fr.voirplustard.dal.DAOFactory;
 import fr.voirplustard.dal.utilisateur.UtilisateurDAO;
 
 public class UtilisateurManager {

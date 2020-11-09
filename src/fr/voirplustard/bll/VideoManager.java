@@ -4,7 +4,7 @@ import java.sql.SQLException;
 
 import fr.voirplustard.BusinessException;
 import fr.voirplustard.bo.Video;
-import fr.voirplustard.dal.video.DAOFactory;
+import fr.voirplustard.dal.DAOFactory;
 import fr.voirplustard.dal.video.VideoDAO;
 
 public class VideoManager {
