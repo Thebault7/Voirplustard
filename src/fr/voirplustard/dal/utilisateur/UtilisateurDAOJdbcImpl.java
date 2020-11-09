@@ -7,6 +7,7 @@ import java.sql.SQLException;
 
 import fr.voirplustard.BusinessException;
 import fr.voirplustard.bo.Utilisateur;
+import fr.voirplustard.dal.ConnectionProvider;
 
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 

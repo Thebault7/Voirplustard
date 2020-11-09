@@ -61,6 +61,9 @@
 		%>
 	</div>
 
+	<br>
+	<hr>
+	<br>
 
 
 
@@ -81,18 +84,20 @@
 		<a href="#" onclick="ajaxFonction()">ajax</a>
 	</div>
 	<h1 id="textici"></h1>
+	<h1 id="texticibis"></h1>
 </body>
 
 <script type="text/javascript">
 	function ajaxFonction() {
-		var url = "https://api.dailymotion.com/videos?fields=title%2Clanguage%2Cchannel.name%2Cduration%2Cowner.screenname&page=1&limit=3&search=html&languages=fr";
+		var url = "https://api.dailymotion.com/videos?fields=duration%2Cdescription%2Clanguage%2Cid%2Curl%2Ctitle%2Cchannel.name%2Cowner.screenname&page=1&limit=9&search=développeur";
 		var addressRequest = new XMLHttpRequest();
 		addressRequest.open('GET', url);
 		addressRequest.onload = function() {
-			//			console.log(addressRequest.responseText);
+			console.log(addressRequest.responseText);
 			if (addressRequest.status >= 200 && addressRequest.status < 400) {
 				var addressData = JSON.parse(addressRequest.responseText);
-				document.getElementById("textici").innerHTML = addressData['list'][1]['channel.name'];
+				document.getElementById("textici").innerHTML = addressData['list'][0]['channel.name'];
+				document.getElementById("texticibis").innerHTML = addressData['list'][0]['description'];
 			} else {
 				alert("Pas de page à afficher");
 			}

@@ -1,4 +1,4 @@
-package fr.voirplustard.dal.utilisateur;
+package fr.voirplustard.dal;
 
 import java.sql.Connection;
 import java.sql.SQLException;
