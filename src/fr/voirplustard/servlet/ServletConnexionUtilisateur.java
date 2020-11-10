@@ -60,7 +60,7 @@ public class ServletConnexionUtilisateur extends HttpServlet {
 		String identifiantConnexion = request.getParameter("identifiantUtilisateur");
 		String motDePasse = request.getParameter("passwordUtilisateur");
 
-		// instanciation du manager pour accéder à la base de données
+		// récupération du manager pour accéder à la base de données
 		UtilisateurManager um = UtilisateurManager.getInstance();
 
 		// hachage du mot de passe

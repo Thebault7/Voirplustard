@@ -65,8 +65,20 @@
 	<hr>
 	<br>
 
-
-
+	<div>
+		<form method="get" action="ChargerVideo" >
+			<div>
+				<label for="texteAChercher">Titre de la vidéo</label>
+				<input type="text" id="texteAChercher" placeholder="Titre de la vidéo" name="texteAChercher" required />
+			</div>
+			<div>
+				<button type="submit" name="rechercheVideo">Rechercher la vidéo</button>
+			</div>
+		</form>
+	</div>
+	<div>
+		
+	</div>
 
 
 

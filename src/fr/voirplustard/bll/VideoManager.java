@@ -1,6 +1,7 @@
 package fr.voirplustard.bll;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import fr.voirplustard.BusinessException;
 import fr.voirplustard.bo.Video;
@@ -23,7 +24,7 @@ public class VideoManager {
 		return instanceVideoManager;
 	}
 	
-	public Video selectionnerParTitre(String titre) throws SQLException, BusinessException, Exception {
+	public List<Video> selectionnerParTitre(String titre) throws SQLException, BusinessException, Exception {
 		return this.videoDAO.selectionnerParTitre(titre);
 	}
 }
