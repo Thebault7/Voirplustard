@@ -1,6 +1,8 @@
 package fr.voirplustard.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.Servlet;
@@ -10,6 +12,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import fr.voirplustard.bo.Video;
 
 /**
  * Servlet implementation class ServletAccueil
@@ -55,6 +59,7 @@ public class ServletAccueil extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/affichage/accueil.jsp");
+ 		request.setAttribute("listeVideos", new ArrayList<Video>());
 		rd.forward(request, response);
 	}
 

@@ -8,10 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.voirplustard.BusinessException;
-import fr.voirplustard.bll.SiteManager;
 import fr.voirplustard.bo.Video;
 import fr.voirplustard.dal.ConnectionProvider;
-import fr.voirplustard.dal.DAOFactory;
 
 public class VideoDAOJdbcImpl implements VideoDAO {
 	
@@ -89,6 +87,17 @@ public class VideoDAOJdbcImpl implements VideoDAO {
 			pstmt.setInt(7, video.getNomChannel());
 			pstmt.setInt(8, video.getProprietaire());
 			pstmt.setInt(9, video.getUtilisateur());
+			pstmt.execute();
+			ResultSet rs = pstmt.getGeneratedKeys();
+			if (rs != null && rs.next()) {
+				video.setIdVideo(rs.getInt(1));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Erreur, échec de la connexion.");
+			System.out.println("VideoDAOJdbcImpl - ajouterVideo - SQLException");
+			// TODO faire remonter l'erreur à l'utilisateur
+			throw e;
 		}
 	}
 }
