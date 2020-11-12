@@ -12,6 +12,8 @@ import fr.voirplustard.dal.ConnectionProvider;
 public class ProprietaireDAOJdbcImpl implements ProprietaireDAO {
 
 	private static final String SELECT_BY_NAME = "SELECT id_proprietaire, proprietaire FROM proprietaires WHERE proprietaire=?";
+	private static final String SELECT_MAX_ID = "SELECT MAX(id_proprietaire) FROM proprietaires";
+	private static final String INSERT_PROPRIETAIRE = "INSERT INTO proprietaires VALUES(?,?)";
 	
 	@Override
 	public Proprietaire selectionnerParNom(String nomProprietaire) throws SQLException, BusinessException {
@@ -36,6 +38,50 @@ public class ProprietaireDAOJdbcImpl implements ProprietaireDAO {
 			throw e;
 		}
 		return proprietaire;
+	}
+
+	@Override
+	public int chercherMaxId() throws SQLException, BusinessException {
+		System.out.println("ProprietaireDAOJdbcImpl - chercherMaxId");
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			PreparedStatement pstmt;
+			pstmt = cnx.prepareStatement(SELECT_MAX_ID, PreparedStatement.RETURN_GENERATED_KEYS);
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.next()) {
+				return rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Erreur, échec de la connexion.");
+			System.out.println("ProprietaireDAOJdbcImpl - chercherMaxId - SQLException");
+			// TODO faire remonter l'erreur à l'utilisateur
+			throw e;
+		}
+		return 0;
+	}
+
+	@Override
+	public int ajouterProprietaire(Proprietaire proprietaire) throws SQLException, BusinessException {
+		System.out.println("ProprietaireDAOJdbcImpl - ajouterProprietaire");
+		int maxIdNumberEnBaseDeDonnées = this.chercherMaxId();
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			PreparedStatement pstmt;
+			pstmt = cnx.prepareStatement(INSERT_PROPRIETAIRE, PreparedStatement.RETURN_GENERATED_KEYS);
+			pstmt.setInt(1, maxIdNumberEnBaseDeDonnées + 1);
+			pstmt.setString(2, proprietaire.getProprietaire());
+			pstmt.execute();
+			ResultSet rs = pstmt.getGeneratedKeys();
+			if (rs != null && rs.next()) {
+				proprietaire.setIdProprietaire(rs.getInt(1));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Erreur, échec de la connexion.");
+			System.out.println("ProprietaireDAOJdbcImpl - ajouterUtilisateur - SQLException");
+			// TODO faire remonter l'erreur à l'utilisateur
+			throw e;
+		}
+		return maxIdNumberEnBaseDeDonnées;
 	}
 
 }

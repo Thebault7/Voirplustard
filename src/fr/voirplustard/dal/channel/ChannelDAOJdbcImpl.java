@@ -12,6 +12,8 @@ import fr.voirplustard.dal.ConnectionProvider;
 public class ChannelDAOJdbcImpl implements ChannelDAO {
 	
 	private static final String SELECT_BY_NAME = "SELECT id_channel, channel FROM channels WHERE channel=?";
+	private static final String SELECT_MAX_ID = "SELECT MAX(id_channel) FROM channels";
+	private static final String INSERT_CHANNEL = "INSERT INTO sites VALUES(?,?)";
 
 	@Override
 	public Channel selectionnerParNom(String nom) throws SQLException, BusinessException {
@@ -36,5 +38,49 @@ public class ChannelDAOJdbcImpl implements ChannelDAO {
 			throw e;
 		}
 		return channel;
+	}
+
+	@Override
+	public int chercherMaxId() throws SQLException, BusinessException {
+		System.out.println("ChannelDAOJdbcImpl - chercherMaxId");
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			PreparedStatement pstmt;
+			pstmt = cnx.prepareStatement(SELECT_MAX_ID, PreparedStatement.RETURN_GENERATED_KEYS);
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.next()) {
+				return rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Erreur, échec de la connexion.");
+			System.out.println("ChannelDAOJdbcImpl - chercherMaxId - SQLException");
+			// TODO faire remonter l'erreur à l'utilisateur
+			throw e;
+		}
+		return 0;
+	}
+
+	@Override
+	public int ajouterChannel(Channel channel) throws SQLException, BusinessException {
+		System.out.println("ChannelDAOJdbcImpl - ajouterChannel");
+		int maxIdNumberEnBaseDeDonnées = this.chercherMaxId();
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			PreparedStatement pstmt;
+			pstmt = cnx.prepareStatement(INSERT_CHANNEL, PreparedStatement.RETURN_GENERATED_KEYS);
+			pstmt.setInt(1, maxIdNumberEnBaseDeDonnées + 1);
+			pstmt.setString(2, channel.getChannel());
+			pstmt.execute();
+			ResultSet rs = pstmt.getGeneratedKeys();
+			if (rs != null && rs.next()) {
+				channel.setIdChannel(rs.getInt(1));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Erreur, échec de la connexion.");
+			System.out.println("ChannelDAOJdbcImpl - ajouterUtilisateur - SQLException");
+			// TODO faire remonter l'erreur à l'utilisateur
+			throw e;
+		}
+		return maxIdNumberEnBaseDeDonnées;
 	}
 }

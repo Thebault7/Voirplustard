@@ -8,4 +8,8 @@ import fr.voirplustard.bo.Langue;
 public interface LangueDAO {
 
 	public Langue selectionnerParNom(String nom) throws SQLException, BusinessException;
+	
+	public int chercherMaxId() throws SQLException, BusinessException;
+	
+	public int ajouterLangue(Langue langue) throws SQLException, BusinessException;
 }

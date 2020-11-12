@@ -12,6 +12,8 @@ import fr.voirplustard.dal.ConnectionProvider;
 public class LangueDAOJdbcImpl implements LangueDAO {
 	
 	private static final String SELECT_BY_NAME = "SELECT id_langue, langue, description FROM langues WHERE langue=?";
+	private static final String SELECT_MAX_ID = "SELECT MAX(id_langue) FROM langues";
+	private static final String INSERT_LANGUE = "INSERT INTO sites VALUES(?,?,?)";
 
 	@Override
 	public Langue selectionnerParNom(String nom) throws SQLException, BusinessException {
@@ -37,6 +39,51 @@ public class LangueDAOJdbcImpl implements LangueDAO {
 			throw e;
 		}
 		return langue;
+	}
+
+	@Override
+	public int chercherMaxId() throws SQLException, BusinessException {
+		System.out.println("LangueDAOJdbcImpl - chercherMaxId");
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			PreparedStatement pstmt;
+			pstmt = cnx.prepareStatement(SELECT_MAX_ID, PreparedStatement.RETURN_GENERATED_KEYS);
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.next()) {
+				return rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Erreur, échec de la connexion.");
+			System.out.println("LangueDAOJdbcImpl - chercherMaxId - SQLException");
+			// TODO faire remonter l'erreur à l'utilisateur
+			throw e;
+		}
+		return 0;
+	}
+
+	@Override
+	public int ajouterLangue(Langue langue) throws SQLException, BusinessException {
+		System.out.println("LangueDAOJdbcImpl - ajouterLangue");
+		int maxIdNumberEnBaseDeDonnées = this.chercherMaxId();
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			PreparedStatement pstmt;
+			pstmt = cnx.prepareStatement(INSERT_LANGUE, PreparedStatement.RETURN_GENERATED_KEYS);
+			pstmt.setInt(1, maxIdNumberEnBaseDeDonnées + 1);
+			pstmt.setString(2, langue.getLangue());
+			pstmt.setString(3, langue.getDescription());
+			pstmt.execute();
+			ResultSet rs = pstmt.getGeneratedKeys();
+			if (rs != null && rs.next()) {
+				langue.setIdLangue(rs.getInt(1));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Erreur, échec de la connexion.");
+			System.out.println("LangueDAOJdbcImpl - ajouterUtilisateur - SQLException");
+			// TODO faire remonter l'erreur à l'utilisateur
+			throw e;
+		}
+		return maxIdNumberEnBaseDeDonnées;
 	}
 
 }
