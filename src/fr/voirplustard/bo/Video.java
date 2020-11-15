@@ -22,6 +22,11 @@ public class Video implements Serializable {
 	public Video() {
 		super();
 	}
+	
+	public Video(int idVideo) {
+		super();
+		this.idVideo = idVideo;
+	}
 
 	public Video(int duree, String description, int langue, int idVideoWebSite, String titre,
 			int nomChannel, int proprietaire) {

@@ -11,7 +11,7 @@
 </head>
 <body>
 	<div>
-		<%
+	<%-- 	<%
 			List<Video> listeVideos = (List<Video>) request.getAttribute("listeVideo");
 			if (listeVideos.isEmpty()) {
 		%>
@@ -27,12 +27,31 @@
 		<%
 			}
 			}
+		%>--%>
+		
+		<%
+			Object objetListeVideos = request.getAttribute("listeVideo");
+			if (objetListeVideos == null) {
+		%>
+			<p>Aucune vidéo n'a été trouvée.</p>
+		<%
+			} else {
+				List<Video> listeVideos = (List<Video>) objetListeVideos;
+				for (int i = 0; i < listeVideos.size(); i++) {
+					Video video = listeVideos.get(i);
+		%>
+		<div>
+			<p>
+				Titre de la video:
+				<%=video.getTitre()%></p>
+		</div>
+		<%
+			}
+			}
 		%>
 		
 		
 		
-		
-		<%@ include file="/WEB-INF/affichage/affichageVideos.jspf"%>
 	</div>
 </body>
 </html>
