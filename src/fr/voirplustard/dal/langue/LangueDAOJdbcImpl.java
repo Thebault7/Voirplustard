@@ -13,7 +13,7 @@ public class LangueDAOJdbcImpl implements LangueDAO {
 	
 	private static final String SELECT_BY_NAME = "SELECT id_langue, langue, description FROM langues WHERE langue=?";
 	private static final String SELECT_MAX_ID = "SELECT MAX(id_langue) FROM langues";
-	private static final String INSERT_LANGUE = "INSERT INTO sites VALUES(?,?,?)";
+	private static final String INSERT_LANGUE = "INSERT INTO langues VALUES(?,?,?)";
 
 	@Override
 	public Langue selectionnerParNom(String nom) throws SQLException, BusinessException {

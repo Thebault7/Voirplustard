@@ -13,9 +13,10 @@ import fr.voirplustard.dal.ConnectionProvider;
 
 public class VideoDAOJdbcImpl implements VideoDAO {
 	
-	private static final String SELECT_BY_TITLE = "SELECT id_video, duree, description, id_langue, id_site, titre, id_channel, id_proprietaire, id_utilisateur FROM videos WHERE titre LIKE ?";
+	private static final String SELECT_BY_TITLE = "SELECT id_video, duree, description, id_langue, id_site, id_video_du_site, titre, id_channel, id_proprietaire, id_utilisateur FROM videos WHERE titre LIKE ?";
 	private static final String SELECT_MAX_ID = "SELECT MAX(id_video) FROM videos";
-	private static final String INSERT_VIDEO = "INSERT INTO videos VALUES(?,?,?,?,?,?,?,?,?)";
+	private static final String INSERT_VIDEO = "INSERT INTO videos VALUES(?,?,?,?,?,?,?,?,?,?)";
+	private static final String SELECT_BY_ID_VIDEO_DU_SITE = "SELECT id_video_du_site FROM videos WHERE id_video_du_site=?";
 
 	@Override
 	public List<Video> selectionnerParTitre(String titre) throws SQLException {
@@ -33,10 +34,11 @@ public class VideoDAOJdbcImpl implements VideoDAO {
 				video.setDescription(rs.getString(3));
 				video.setLangue(rs.getInt(4));
 				video.setIdVideoWebSite(rs.getInt(5));
-				video.setTitre(rs.getString(6));
-				video.setNomChannel(rs.getInt(7));
-				video.setProprietaire(rs.getInt(8));
-				video.setUtilisateur(rs.getInt(9));
+				video.setIdVideoDuSite(rs.getString(6));
+				video.setTitre(rs.getString(7));
+				video.setNomChannel(rs.getInt(8));
+				video.setProprietaire(rs.getInt(9));
+				video.setUtilisateur(rs.getInt(10));
 				listVideos.add(video);
 			}
 			rs.close();
@@ -72,7 +74,7 @@ public class VideoDAOJdbcImpl implements VideoDAO {
 	}
 	
 	@Override
-	public void ajouterVideo(Video video) throws SQLException, BusinessException {
+	public int ajouterVideo(Video video) throws SQLException, BusinessException {
 		System.out.println("VideoDAOJdbcImpl - ajouterVideo");
 		int maxIdNumberEnBaseDeDonnees = this.chercherMaxId();
 		try (Connection cnx = ConnectionProvider.getConnection()) {
@@ -83,10 +85,11 @@ public class VideoDAOJdbcImpl implements VideoDAO {
 			pstmt.setString(3, video.getDescription());
 			pstmt.setInt(4, video.getLangue());
 			pstmt.setInt(5, video.getIdVideoWebSite());
-			pstmt.setString(6, video.getTitre());
-			pstmt.setInt(7, video.getNomChannel());
-			pstmt.setInt(8, video.getProprietaire());
-			pstmt.setInt(9, video.getUtilisateur());
+			pstmt.setString(6, video.getIdVideoDuSite());
+			pstmt.setString(7, video.getTitre());
+			pstmt.setInt(8, video.getNomChannel());
+			pstmt.setInt(9, video.getProprietaire());
+			pstmt.setInt(10, video.getUtilisateur());
 			pstmt.execute();
 			ResultSet rs = pstmt.getGeneratedKeys();
 			if (rs != null && rs.next()) {
@@ -96,6 +99,28 @@ public class VideoDAOJdbcImpl implements VideoDAO {
 			e.printStackTrace();
 			System.out.println("Erreur, échec de la connexion.");
 			System.out.println("VideoDAOJdbcImpl - ajouterVideo - SQLException");
+			// TODO faire remonter l'erreur à l'utilisateur
+			throw e;
+		}
+		return maxIdNumberEnBaseDeDonnees + 1;
+	}
+
+	@Override
+	public boolean selectionnerParIdVideoDuSite(String id) throws SQLException, BusinessException {
+		System.out.println("VideoDAOJdbcImpl - selectionnerParIdVideoDuSite");
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			PreparedStatement pstmt;
+			pstmt = cnx.prepareStatement(SELECT_BY_ID_VIDEO_DU_SITE, PreparedStatement.RETURN_GENERATED_KEYS);
+			pstmt.setString(1, id);
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.next()) {
+				return true;
+			}
+			return false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Erreur, échec de la connexion.");
+			System.out.println("VideoDAOJdbcImpl - selectionnerParIdVideoDuSite - SQLException");
 			// TODO faire remonter l'erreur à l'utilisateur
 			throw e;
 		}

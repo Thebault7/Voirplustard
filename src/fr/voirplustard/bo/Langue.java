@@ -17,6 +17,11 @@ public class Langue implements Serializable {
 	public Langue() {
 		super();
 	}
+	
+	public Langue(String langue) {
+		super();
+		this.langue = langue;
+	}
 
 	public Langue(int idLangue, String langue) {
 		super();

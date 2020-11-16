@@ -26,4 +26,12 @@ public class ChannelManager {
 	public Channel selectionnerParNom(String nom) throws SQLException, BusinessException, Exception {
 		return this.channelDAO.selectionnerParNom(nom);
 	}
+	
+	public int chercherMaxId() throws SQLException, BusinessException, Exception {
+		return this.channelDAO.chercherMaxId();
+	}
+	
+	public int ajouter(Channel channel) throws SQLException, BusinessException, Exception {
+		return this.channelDAO.ajouterChannel(channel);
+	}
 }

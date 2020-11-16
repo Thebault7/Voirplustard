@@ -26,4 +26,12 @@ public class LangueManager {
 	public Langue selectionnerParNom(String nom) throws SQLException, BusinessException, Exception {
 		return this.langueDAO.selectionnerParNom(nom);
 	}
+	
+	public int chercherMaxId() throws SQLException, BusinessException, Exception {
+		return this.langueDAO.chercherMaxId();
+	}
+	
+	public int ajouter(Langue langue) throws SQLException, BusinessException, Exception {
+		return this.langueDAO.ajouterLangue(langue);
+	}
 }

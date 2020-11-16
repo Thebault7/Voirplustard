@@ -13,7 +13,7 @@ public class ChannelDAOJdbcImpl implements ChannelDAO {
 	
 	private static final String SELECT_BY_NAME = "SELECT id_channel, channel FROM channels WHERE channel=?";
 	private static final String SELECT_MAX_ID = "SELECT MAX(id_channel) FROM channels";
-	private static final String INSERT_CHANNEL = "INSERT INTO sites VALUES(?,?)";
+	private static final String INSERT_CHANNEL = "INSERT INTO channels VALUES(?,?)";
 
 	@Override
 	public Channel selectionnerParNom(String nom) throws SQLException, BusinessException {

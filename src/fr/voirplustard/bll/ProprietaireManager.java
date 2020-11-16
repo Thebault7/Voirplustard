@@ -26,4 +26,12 @@ public class ProprietaireManager {
 	public Proprietaire selectionnerParNom(String nom) throws SQLException, BusinessException, Exception {
 		return this.proprietaireDAO.selectionnerParNom(nom);
 	}
+	
+	public int chercherMaxId() throws SQLException, BusinessException, Exception {
+		return this.proprietaireDAO.chercherMaxId();
+	}
+	
+	public int ajouter(Proprietaire proprietaire) throws SQLException, BusinessException, Exception {
+		return this.proprietaireDAO.ajouterProprietaire(proprietaire);
+	}
 }

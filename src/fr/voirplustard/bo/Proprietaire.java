@@ -16,6 +16,11 @@ public class Proprietaire implements Serializable {
 		super();
 	}
 
+	public Proprietaire(String proprietaire) {
+		super();
+		this.proprietaire = proprietaire;
+	}
+
 	public Proprietaire(int idProprietaire, String proprietaire) {
 		super();
 		this.idProprietaire = idProprietaire;

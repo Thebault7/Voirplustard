@@ -14,6 +14,7 @@ public class Video implements Serializable {
 	private String description;
 	private int langue;
 	private int idVideoWebSite;
+	private String idVideoDuSite;
 	private String titre;
 	private int nomChannel;
 	private int proprietaire;
@@ -28,19 +29,20 @@ public class Video implements Serializable {
 		this.idVideo = idVideo;
 	}
 
-	public Video(int duree, String description, int langue, int idVideoWebSite, String titre,
+	public Video(int duree, String description, int langue, int idVideoWebSite, String idVideoDuSite, String titre,
 			int nomChannel, int proprietaire) {
 		super();
 		this.duree = duree;
 		this.description = description;
 		this.langue = langue;
 		this.idVideoWebSite = idVideoWebSite;
+		this.idVideoDuSite = idVideoDuSite;
 		this.titre = titre;
 		this.nomChannel = nomChannel;
 		this.proprietaire = proprietaire;
 	}
 
-	public Video(int idVideo, int duree, String description, int langue, int idVideoWebSite, 
+	public Video(int idVideo, int duree, String description, int langue, int idVideoWebSite, String idVideoDuSite,
 			String titre, int nomChannel, int proprietaire) {
 		super();
 		this.idVideo = idVideo;
@@ -48,12 +50,13 @@ public class Video implements Serializable {
 		this.description = description;
 		this.langue = langue;
 		this.idVideoWebSite = idVideoWebSite;
+		this.idVideoDuSite = idVideoDuSite;
 		this.titre = titre;
 		this.nomChannel = nomChannel;
 		this.proprietaire = proprietaire;
 	}
 
-	public Video(int idVideo, int duree, String description, int langue, int idVideoWebSite, 
+	public Video(int idVideo, int duree, String description, int langue, int idVideoWebSite, String idVideoDuSite,
 			String titre, int nomChannel, int proprietaire, int utilisateur) {
 		super();
 		this.idVideo = idVideo;
@@ -61,6 +64,7 @@ public class Video implements Serializable {
 		this.description = description;
 		this.langue = langue;
 		this.idVideoWebSite = idVideoWebSite;
+		this.idVideoDuSite = idVideoDuSite;
 		this.titre = titre;
 		this.nomChannel = nomChannel;
 		this.proprietaire = proprietaire;
@@ -106,6 +110,14 @@ public class Video implements Serializable {
 	public void setIdVideoWebSite(int idVideoWebSite) {
 		this.idVideoWebSite = idVideoWebSite;
 	}
+	
+	public String getIdVideoDuSite() {
+		return idVideoDuSite;
+	}
+
+	public void setIdVideoDuSite(String idVideoDuSite) {
+		this.idVideoDuSite = idVideoDuSite;
+	}
 
 	public String getTitre() {
 		return titre;
@@ -142,7 +154,8 @@ public class Video implements Serializable {
 	@Override
 	public String toString() {
 		return "Video [idVideo=" + idVideo + ", duree=" + duree + ", description=" + description + ", langue=" + langue
-				+ ", idVideoWebSite=" + idVideoWebSite + ", titre=" + titre + ", nomChannel="
-				+ nomChannel + ", proprietaire=" + proprietaire + ", utilisateur=" + utilisateur + "]";
+				+ ", idVideoWebSite=" + idVideoWebSite + ", idVideoDuSite=" + idVideoDuSite + ", titre=" + titre
+				+ ", nomChannel=" + nomChannel + ", proprietaire=" + proprietaire + ", utilisateur=" + utilisateur
+				+ "]";
 	}
 }

@@ -101,6 +101,7 @@ public class ServletConnexionUtilisateur extends HttpServlet {
 		// l'utilisateur est ajouté à la session
 		HttpSession session = request.getSession();
 		session.setAttribute("utilisateur", utilisateur);
+		session.setAttribute("idUtilisateur", utilisateur.getIdUtilisateur());
 		
 		rd = request.getRequestDispatcher("/WEB-INF/affichage/accueil.jsp");
 		rd.forward(request, response);

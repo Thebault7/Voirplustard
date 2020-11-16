@@ -12,5 +12,7 @@ public interface VideoDAO {
 	
 	public int chercherMaxId() throws SQLException, BusinessException;
 	
-	public void ajouterVideo(Video video) throws SQLException, BusinessException;
+	public int ajouterVideo(Video video) throws SQLException, BusinessException;
+	
+	public boolean selectionnerParIdVideoDuSite(String id) throws SQLException, BusinessException;
 }

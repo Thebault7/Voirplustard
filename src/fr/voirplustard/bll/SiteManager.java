@@ -26,4 +26,12 @@ public class SiteManager {
 	public Site selectionnerParNom(String nom) throws SQLException, BusinessException, Exception {
 		return this.siteDAO.selectionnerParNom(nom);
 	}
+	
+	public int chercherMaxId() throws SQLException, BusinessException, Exception {
+		return this.siteDAO.chercherMaxId();
+	}
+	
+	public int ajouter(Site site) throws SQLException, BusinessException, Exception {
+		return this.siteDAO.ajouterSite(site);
+	}
 }

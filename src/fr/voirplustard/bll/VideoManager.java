@@ -27,4 +27,16 @@ public class VideoManager {
 	public List<Video> selectionnerParTitre(String titre) throws SQLException, BusinessException, Exception {
 		return this.videoDAO.selectionnerParTitre(titre);
 	}
+	
+	public int chercherMaxId() throws SQLException, BusinessException, Exception {
+		return this.videoDAO.chercherMaxId();
+	}
+	
+	public int ajouter(Video video) throws SQLException, BusinessException, Exception {
+		return this.videoDAO.ajouterVideo(video);
+	}
+	
+	public boolean isVideoDejaPresente(String id) throws SQLException, BusinessException, Exception {
+		return this.videoDAO.selectionnerParIdVideoDuSite(id);
+	}
 }

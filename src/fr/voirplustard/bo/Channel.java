@@ -16,6 +16,11 @@ public class Channel implements Serializable {
 		super();
 	}
 
+	public Channel(String channel) {
+		super();
+		this.channel = channel;
+	}
+
 	public Channel(int idChannel, String channel) {
 		super();
 		this.idChannel = idChannel;
