@@ -2,19 +2,17 @@
  * 
  */
 
-var requete;
 
-function enregistrerVideoParAjax(duree, description, langue, site, titre,
-		channel, proprietaire, id) {
+function enregistrerVideoParAjax(count) {
 	var url = 'http://localhost:8080/Voirplustard/valider?duree='
-			+ encodeURIComponent(duree) + '&description='
-			+ encodeURIComponent(description) + '&langue='
-			+ encodeURIComponent(langue) + '&site='
-			+ encodeURIComponent(site) + '&titre='
-			+ encodeURIComponent(titre) + '&channel='
-			+ encodeURIComponent(channel) + '&proprietaire='
-			+ encodeURIComponent(proprietaire) + '&id='
-			+ encodeURIComponent(id);
+			+ encodeURIComponent(durations[count]) + '&description='
+			+ encodeURIComponent(descriptions[count]) + '&langue='
+			+ encodeURIComponent(languages[count]) + '&site='
+			+ encodeURIComponent(sites[0]) + '&titre='
+			+ encodeURIComponent(titles[count]) + '&channel='
+			+ encodeURIComponent(channels[count]) + '&proprietaire='
+			+ encodeURIComponent(proprietaires[count]) + '&id='
+			+ encodeURIComponent(ids[count]);
 	if (window.XMLHttpRequest) {
 		requete = new XMLHttpRequest();
 		requete.open("POST", url, true);

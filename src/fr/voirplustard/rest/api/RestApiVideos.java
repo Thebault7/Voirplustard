@@ -40,8 +40,6 @@ public class RestApiVideos extends HttpServlet implements Servlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-//		RequestDispatcher rd;
-		
 		System.out.println("------------------------REST API doGet-----------------------");
 
 		// récupération du titre fournit par l'utilisateur
@@ -65,17 +63,11 @@ public class RestApiVideos extends HttpServlet implements Servlet {
 		
 		// on vérifie si la liste de vidéos obtenues est vide ou pas
 		if (listeVideo.isEmpty()) {
-//			request.setAttribute("listeVide", "Aucune vidéo n'a été trouvée.");
-//			rd = request.getRequestDispatcher("/WEB-INF/affichage/accueil.jsp");
-//			rd.forward(request, response);
 			response.getWriter().write("<p>Aucune vidéo n'a été trouvée.</p>");
 			return;
 		}
 		
 		// on envoie la liste formattée HTML vers la jsp
-//		request.setAttribute("listeVideo", listeVideo);
-//		rd = request.getRequestDispatcher("/WEB-INF/affichage/accueil.jsp");
-//		rd.forward(request, response);
 		String message = "";
 		for (int i = 0; i < listeVideo.size(); i++) {
 			message += "titre de la vidéo : " + listeVideo.get(i).getTitre() + "<br>";
@@ -87,6 +79,8 @@ public class RestApiVideos extends HttpServlet implements Servlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		System.out.println("------------------------REST API doPost-----------------------");
+		
 		// on charge les manager pour aller chercher les identifiant en base de données
 		LangueManager lm = LangueManager.getInstance();
 		SiteManager sm = SiteManager.getInstance();

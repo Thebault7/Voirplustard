@@ -66,9 +66,8 @@
 	<br>
 	<hr>
 	<br>
-
+ 
 	<div>
-		<%--		<form method="get" action="ChargerVideo">	 --%>
 		<form method="get">
 			<div>
 				<label for="texteAChercher">Titre de la vidéo</label> <input
@@ -101,64 +100,11 @@
 	<br>
 
 	<div id="affichageVideos"></div>
-
 </body>
 
 <script type="text/javascript">
-	var requete;
 
-	function genererURLselectionnerEnBDD() {
-		var texteAChercher = document.getElementById("texteAChercher").value;
-		var url = 'http://localhost:8080/Voirplustard/valider?texte='
-				+ encodeURIComponent(texteAChercher);
-		if (window.XMLHttpRequest) {
-			requete = new XMLHttpRequest();
-			requete.open("GET", url, true);
-			requete.onreadystatechange = afficherVideos;
-			requete.send(null);
-		} else if (window.ActiveXObject) {
-			requete = new ActiveXObject("Microsoft.XMLHTTP");
-			if (requete) {
-				requete.open("GET", url, true);
-				requete.onreadystatechange = afficherVideos;
-				requete.send();
-			}
-		} else {
-			alert("Le navigateur ne supporte pas la technologie AJAX");
-		}
-	}
-	
-	function afficherVideos() {
-		if (requete.readyState == 4) {
-			if (requete.status == 200) {
-				document.getElementById("afficherVideosDemandees").innerHTML = requete.responseText;
-			} else {
-				alert('Une erreur est survenue lors de la mise à jour de la page.'
-						+ '\n\nCode retour = ' + requete.statusText);
-			}
-		}
-	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	function getFormAsString(nomFormulaire) {
 
@@ -178,4 +124,5 @@
 </script>
 <script src="js/requeteAJAXversSiteVideo.js"></script>
 <script src="js/requeteAJAXenregistrerVideoEnBDD.js"></script>
+<script src="js/requeteAJAXselectVideosEnBDD.js"></script>
 </html>
