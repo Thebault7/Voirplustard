@@ -14,6 +14,7 @@ public class LangueDAOJdbcImpl implements LangueDAO {
 	private static final String SELECT_BY_NAME = "SELECT id_langue, langue, description FROM langues WHERE langue=?";
 	private static final String SELECT_MAX_ID = "SELECT MAX(id_langue) FROM langues";
 	private static final String INSERT_LANGUE = "INSERT INTO langues VALUES(?,?,?)";
+	private static final String SELECT_BY_ID = "SELECT id_langue, langue, description FROM langues WHERE id_langue=?";
 
 	@Override
 	public Langue selectionnerParNom(String nom) throws SQLException, BusinessException {
@@ -84,6 +85,32 @@ public class LangueDAOJdbcImpl implements LangueDAO {
 			throw e;
 		}
 		return maxIdNumberEnBaseDeDonnées;
+	}
+
+	@Override
+	public Langue selectionnerParId(int id) throws SQLException, BusinessException {
+		System.out.println("LangueDAOJdbcImpl - selectionnerParId");
+		Langue langue = new Langue();
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			PreparedStatement pstmt;
+			pstmt = cnx.prepareStatement(SELECT_BY_ID);
+			pstmt.setInt(1, id);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				langue.setIdLangue(rs.getInt(1));
+				langue.setLangue(rs.getString(2));
+				langue.setDescription(rs.getString(3));
+			}
+			rs.close();
+			pstmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Erreur, échec de la connexion.");
+			System.out.println("ProprietaireDAOJdbcImpl - selectionnerParId - SQLException");
+			// TODO faire remonter l'erreur à l'utilisateur
+			throw e;
+		}
+		return langue;
 	}
 
 }

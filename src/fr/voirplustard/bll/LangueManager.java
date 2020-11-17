@@ -34,4 +34,8 @@ public class LangueManager {
 	public int ajouter(Langue langue) throws SQLException, BusinessException, Exception {
 		return this.langueDAO.ajouterLangue(langue);
 	}
+	
+	public Langue selectionnerParId(int id) throws SQLException, BusinessException, Exception {
+		return this.langueDAO.selectionnerParId(id);
+	}
 }

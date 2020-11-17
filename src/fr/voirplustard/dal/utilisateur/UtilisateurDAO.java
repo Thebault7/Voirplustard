@@ -16,4 +16,6 @@ public interface UtilisateurDAO {
 	public int ajouterUtilisateur(Utilisateur utilisateur) throws SQLException, BusinessException;
 	
 	public Utilisateur verifierIdentifiantEtEmail(String identifiantEncode, String motDePasseHache) throws SQLException, BusinessException;
+	
+	public Utilisateur selectionnerParId(int id) throws SQLException, BusinessException;
 }

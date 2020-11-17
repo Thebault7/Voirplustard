@@ -34,4 +34,8 @@ public class ProprietaireManager {
 	public int ajouter(Proprietaire proprietaire) throws SQLException, BusinessException, Exception {
 		return this.proprietaireDAO.ajouterProprietaire(proprietaire);
 	}
+	
+	public Proprietaire selectionnerParId(int id) throws SQLException, BusinessException, Exception {
+		return this.proprietaireDAO.selectionnerParId(id);
+	}
 }

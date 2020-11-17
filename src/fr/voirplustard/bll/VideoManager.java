@@ -39,4 +39,8 @@ public class VideoManager {
 	public boolean isVideoDejaPresente(String id) throws SQLException, BusinessException, Exception {
 		return this.videoDAO.selectionnerParIdVideoDuSite(id);
 	}
+	
+	public Video selectionnerParId(int id) throws SQLException, BusinessException, Exception {
+		return this.videoDAO.selectionnerParId(id);
+	}
 }

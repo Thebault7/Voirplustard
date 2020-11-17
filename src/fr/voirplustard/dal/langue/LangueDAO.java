@@ -12,4 +12,6 @@ public interface LangueDAO {
 	public int chercherMaxId() throws SQLException, BusinessException;
 	
 	public int ajouterLangue(Langue langue) throws SQLException, BusinessException;
+	
+	public Langue selectionnerParId(int id) throws SQLException, BusinessException;
 }

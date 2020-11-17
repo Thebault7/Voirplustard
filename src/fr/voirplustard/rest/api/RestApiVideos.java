@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,16 +12,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 import fr.voirplustard.BusinessException;
 import fr.voirplustard.bll.ChannelManager;
 import fr.voirplustard.bll.LangueManager;
 import fr.voirplustard.bll.ProprietaireManager;
 import fr.voirplustard.bll.SiteManager;
+import fr.voirplustard.bll.UtilisateurManager;
 import fr.voirplustard.bll.VideoManager;
 import fr.voirplustard.bo.Channel;
 import fr.voirplustard.bo.Langue;
 import fr.voirplustard.bo.Proprietaire;
 import fr.voirplustard.bo.Video;
+import fr.voirplustard.bo.VideoJSON;
 
 @WebServlet("/valider")
 public class RestApiVideos extends HttpServlet implements Servlet {
@@ -46,7 +49,12 @@ public class RestApiVideos extends HttpServlet implements Servlet {
 		String titreFournit = request.getParameter("texte");
 
 		// récupération du manager pour accéder à la base de données
+		ChannelManager cm = ChannelManager.getInstance();
+		LangueManager lm = LangueManager.getInstance();
+		ProprietaireManager pm = ProprietaireManager.getInstance();
+		SiteManager sm = SiteManager.getInstance();
 		VideoManager vm = VideoManager.getInstance();
+		UtilisateurManager um = UtilisateurManager.getInstance();
 
 		// recherche des vidéos correspondant au titre fournit par l'utilisateur
 		List<Video> listeVideo = new ArrayList<>();
@@ -67,12 +75,31 @@ public class RestApiVideos extends HttpServlet implements Servlet {
 			return;
 		}
 		
-		// on envoie la liste formattée HTML vers la jsp
-		String message = "";
+		List<VideoJSON> listeVideoJSON = new ArrayList<>();
 		for (int i = 0; i < listeVideo.size(); i++) {
-			message += "titre de la vidéo : " + listeVideo.get(i).getTitre() + "<br>";
+			VideoJSON videoJSON = new VideoJSON();
+			videoJSON.setIdVideo(listeVideo.get(i).getIdVideo());
+			videoJSON.setDuree(listeVideo.get(i).getDuree());
+			videoJSON.setDescription(listeVideo.get(i).getDescription());
+			videoJSON.setIdVideoDuSite(listeVideo.get(i).getIdVideoDuSite());
+			videoJSON.setTitre(listeVideo.get(i).getTitre());
+			try {
+				videoJSON.setLangue(lm.selectionnerParId(listeVideo.get(i).getLangue()).getLangue());
+				videoJSON.setIdVideoWebSite(sm.selectionnerParId(listeVideo.get(i).getIdVideoWebSite()).getsite());
+				videoJSON.setNomChannel(cm.selectionnerParId(listeVideo.get(i).getNomChannel()).getChannel());
+				videoJSON.setProprietaire(pm.selectionnerParId(listeVideo.get(i).getProprietaire()).getProprietaire());
+				videoJSON.setUtilisateur(um.selectionnerParId(listeVideo.get(i).getUtilisateur()).getIdentifiant());
+			} catch (Exception e) {
+				System.out.println("Problème de connexion");
+				e.printStackTrace();
+			}
+			listeVideoJSON.add(videoJSON);
 		}
-		response.getWriter().write("<p>" + message + "</p>");
+		
+		// on envoie la liste formattée JSON vers la jsp
+		Gson gson = new Gson();
+		String jsonListeVideos = gson.toJson(listeVideoJSON);
+		response.getWriter().write(jsonListeVideos);
 		return;
 	}
 

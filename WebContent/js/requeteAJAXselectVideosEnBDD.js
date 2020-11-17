@@ -28,7 +28,8 @@
 	function afficherVideos() {
 		if (requete.readyState == 4) {
 			if (requete.status == 200) {
-				document.getElementById("afficherVideosDemandees").innerHTML = requete.responseText;
+				var resultatSelect = JSON.parse(requete.responseText);
+				document.getElementById("afficherVideosDemandees").innerHTML = renderHTML(resultatSelect);
 			} else {
 				alert('Une erreur est survenue lors de la mise à jour de la page.'
 						+ '\n\nCode retour = ' + requete.statusText);

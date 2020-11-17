@@ -14,6 +14,7 @@ public class SiteDAOJdbcImpl implements SiteDAO {
 	private static final String SELECt_BY_NAME = "SELECT id_site, site, url FROM sites WHERE site=?";
 	private static final String SELECT_MAX_ID = "SELECT MAX(id_site) FROM sites";
 	private static final String INSERT_SITE = "INSERT INTO sites VALUES(?,?,?)";
+	private static final String SELECt_BY_ID = "SELECT id_site, site, url FROM sites WHERE id_site=?";
 
 	@Override
 	public Site selectionnerParNom(String nomSite) throws SQLException, BusinessException {
@@ -84,5 +85,31 @@ public class SiteDAOJdbcImpl implements SiteDAO {
 			throw e;
 		}
 		return maxIdNumberEnBaseDeDonnées;
+	}
+
+	@Override
+	public Site selectionnerParId(int id) throws SQLException, BusinessException {
+		System.out.println("SiteDAOJdbcImpl - selectionnerParId");
+		Site site = new Site();
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			PreparedStatement pstmt;
+			pstmt = cnx.prepareStatement(SELECt_BY_ID);
+			pstmt.setInt(1, id);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				site.setidSite(rs.getInt(1));
+				site.setsite(rs.getString(2));
+				site.setUrl(rs.getString(3));
+			}
+			rs.close();
+			pstmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Erreur, échec de la connexion.");
+			System.out.println("SiteDAOJdbcImpl - selectionnerParId - SQLException");
+			// TODO faire remonter l'erreur à l'utilisateur
+			throw e;
+		}
+		return site;
 	}
 }

@@ -12,4 +12,6 @@ public interface SiteDAO {
 	public int chercherMaxId() throws SQLException, BusinessException;
 	
 	public int ajouterSite(Site site) throws SQLException, BusinessException;
+	
+	public Site selectionnerParId(int id) throws SQLException, BusinessException;
 }

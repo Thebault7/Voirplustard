@@ -34,4 +34,8 @@ public class SiteManager {
 	public int ajouter(Site site) throws SQLException, BusinessException, Exception {
 		return this.siteDAO.ajouterSite(site);
 	}
+	
+	public Site selectionnerParId(int id) throws SQLException, BusinessException, Exception {
+		return this.siteDAO.selectionnerParId(id);
+	}
 }

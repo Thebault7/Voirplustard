@@ -95,35 +95,3 @@ function creationAffichageVideos(requete) {
 	}
 	return affichageVideos;
 }
-
-function creationAffichageVideosTTTTTTTTTT(requete) {
-	var affichageVideos = "";
-	for (var i = 0; i < requete['list'].length; i++) {
-		affichageVideos += "<h2>Titre : " + requete['list'][i]['title']
-				+ "</h2><br>";
-		affichageVideos += '<h3><input type="button" value="Enregistrer cette vidéo" onclick=\'enregistrerVideoParAjax("'
-				+ requete['list'][i]['duration']
-				+ '", "'
-				+ requete['list'][i]['description']
-				+ '", "'
-				+ requete['list'][i]['language']
-				+ '", "'
-				+ 'Dailymotion", "'
-				+ requete['list'][i]['title']
-				+ '", "'
-				+ requete['list'][i]['channel.name']
-				+ '", "'
-				+ requete['list'][i]['owner.screenname']
-				+ '", "'
-				+ requete['list'][i]['id'] + '")\' /></h3><br>';
-		affichageVideos += "<h3>Description : "
-				+ requete['list'][i]['description'] + "</h3><br>";
-		affichageVideos += "<h3>Chaîne : " + requete['list'][i]['channel.name']
-				+ "</h3><br>";
-		affichageVideos += "<h3>Durée : " + requete['list'][i]['duration']
-				+ " secondes</h3><br>";
-		affichageVideos += '<h3>Lien : <a href="' + requete['list'][i]['url']
-				+ '">' + requete['list'][i]['url'] + '</a></h3><br>';
-	}
-	return affichageVideos;
-}

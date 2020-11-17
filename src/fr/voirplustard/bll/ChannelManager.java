@@ -34,4 +34,8 @@ public class ChannelManager {
 	public int ajouter(Channel channel) throws SQLException, BusinessException, Exception {
 		return this.channelDAO.ajouterChannel(channel);
 	}
+	
+	public Channel selectionnerParId(int id) throws SQLException, BusinessException, Exception {
+		return this.channelDAO.selectionnerParId(id);
+	}
 }

@@ -12,4 +12,6 @@ public interface ProprietaireDAO {
 	public int chercherMaxId() throws SQLException, BusinessException;
 	
 	public int ajouterProprietaire(Proprietaire proprietaire) throws SQLException, BusinessException;
+	
+	public Proprietaire selectionnerParId(int id)  throws SQLException, BusinessException;
 }

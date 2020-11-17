@@ -13,4 +13,5 @@ public interface ChannelDAO {
 
 	public int ajouterChannel(Channel channel) throws SQLException, BusinessException;
 	
+	public Channel selectionnerParId(int id) throws SQLException, BusinessException;
 }

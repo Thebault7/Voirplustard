@@ -44,4 +44,8 @@ public class UtilisateurManager {
 			throws SQLException, BusinessException, Exception {
 		return this.utilisateurDAO.verifierIdentifiantEtEmail(identifiantEncode, motDePasseHache);
 	}
+	
+	public Utilisateur selectionnerParId(int id) throws SQLException, BusinessException, Exception {
+		return this.utilisateurDAO.selectionnerParId(id);
+	}
 }
