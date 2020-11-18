@@ -18,7 +18,6 @@ public class VideoJSON implements Serializable {
 	private String titre;
 	private String nomChannel;
 	private String proprietaire;
-	private String utilisateur;
 	
 	public VideoJSON() {
 		super();
@@ -94,13 +93,5 @@ public class VideoJSON implements Serializable {
 
 	public void setProprietaire(String proprietaire) {
 		this.proprietaire = proprietaire;
-	}
-
-	public String getUtilisateur() {
-		return utilisateur;
-	}
-
-	public void setUtilisateur(String utilisateur) {
-		this.utilisateur = utilisateur;
 	}
 }

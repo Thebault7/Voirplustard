@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
@@ -19,7 +20,6 @@ import fr.voirplustard.bll.ChannelManager;
 import fr.voirplustard.bll.LangueManager;
 import fr.voirplustard.bll.ProprietaireManager;
 import fr.voirplustard.bll.SiteManager;
-import fr.voirplustard.bll.UtilisateurManager;
 import fr.voirplustard.bll.VideoManager;
 import fr.voirplustard.bo.Channel;
 import fr.voirplustard.bo.Langue;
@@ -54,12 +54,13 @@ public class RestApiVideos extends HttpServlet implements Servlet {
 		ProprietaireManager pm = ProprietaireManager.getInstance();
 		SiteManager sm = SiteManager.getInstance();
 		VideoManager vm = VideoManager.getInstance();
-		UtilisateurManager um = UtilisateurManager.getInstance();
 
 		// recherche des vidéos correspondant au titre fournit par l'utilisateur
 		List<Video> listeVideo = new ArrayList<>();
+		HttpSession session = request.getSession();
 		try {
-			listeVideo = vm.selectionnerParTitre(titreFournit);
+			listeVideo = vm.selectionnerParTitre(titreFournit,
+					Integer.parseInt(session.getAttribute("idUtilisateur").toString()));
 		} catch (SQLException e) {
 			System.out.println("Erreur de connexion avec la base de données.");
 			e.printStackTrace();
@@ -68,13 +69,13 @@ public class RestApiVideos extends HttpServlet implements Servlet {
 		} catch (Exception e) {
 			System.out.println("Aucune vidéo correspondant dans la base de données.");
 		}
-		
+
 		// on vérifie si la liste de vidéos obtenues est vide ou pas
 		if (listeVideo.isEmpty()) {
-			response.getWriter().write("<p>Aucune vidéo n'a été trouvée.</p>");
+			response.getWriter().write("{\"message\":\"<p>Aucune vidéo n'a été trouvée.</p>\"}");
 			return;
 		}
-		
+
 		List<VideoJSON> listeVideoJSON = new ArrayList<>();
 		for (int i = 0; i < listeVideo.size(); i++) {
 			VideoJSON videoJSON = new VideoJSON();
@@ -88,14 +89,13 @@ public class RestApiVideos extends HttpServlet implements Servlet {
 				videoJSON.setIdVideoWebSite(sm.selectionnerParId(listeVideo.get(i).getIdVideoWebSite()).getsite());
 				videoJSON.setNomChannel(cm.selectionnerParId(listeVideo.get(i).getNomChannel()).getChannel());
 				videoJSON.setProprietaire(pm.selectionnerParId(listeVideo.get(i).getProprietaire()).getProprietaire());
-				videoJSON.setUtilisateur(um.selectionnerParId(listeVideo.get(i).getUtilisateur()).getIdentifiant());
 			} catch (Exception e) {
 				System.out.println("Problème de connexion");
 				e.printStackTrace();
 			}
 			listeVideoJSON.add(videoJSON);
 		}
-		
+
 		// on envoie la liste formattée JSON vers la jsp
 		Gson gson = new Gson();
 		String jsonListeVideos = gson.toJson(listeVideoJSON);
@@ -107,7 +107,7 @@ public class RestApiVideos extends HttpServlet implements Servlet {
 			throws ServletException, IOException {
 
 		System.out.println("------------------------REST API doPost-----------------------");
-		
+
 		// on charge les manager pour aller chercher les identifiant en base de données
 		LangueManager lm = LangueManager.getInstance();
 		SiteManager sm = SiteManager.getInstance();
@@ -119,9 +119,10 @@ public class RestApiVideos extends HttpServlet implements Servlet {
 		String message = "";
 
 		// on vérifie si la vidéo n'est pas déjà en base de données
-
+		HttpSession session = request.getSession();
 		try {
-			if (vm.isVideoDejaPresente(request.getParameter("id"))) {
+			if (vm.isVideoDejaPresente(request.getParameter("id"),
+					Integer.parseInt(session.getAttribute("idUtilisateur").toString()))) {
 				message += "Cette vidéo est déjà enregistrée parmis vos favoris.";
 			} else {
 				// on crée une nouvelle video dont on rempli les attributs

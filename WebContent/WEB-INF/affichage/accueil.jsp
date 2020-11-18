@@ -20,8 +20,13 @@
 		<p>
 			Bonjour, vous êtes connecté en tant que " <strong
 				id="identifiantUtilisateur"><c:out
-					value="${sessionScope.utilisateur.identifiant}" /></strong> "
+					value="${sessionScope.utilisateur.identifiant}" /></strong> ".
 		</p>
+		<div>
+			<form method="get" action="Accueil">
+				<button type="submit">Déconnexion</button>
+			</form>
+		</div>
 		<%
 			} else {
 		%>
@@ -66,46 +71,56 @@
 	<br>
 	<hr>
 	<br>
- 
-	<div>
-		<form method="get">
-			<div>
-				<label for="texteAChercher">Titre de la vidéo</label> <input
-					type="text" id="texteAChercher" placeholder="Titre de la vidéo"
-					name="texteAChercher" required />
-			</div>
-			<div>
-				<input type="button"
-					value="Rechercher la vidéo en base de données"
-					onclick="genererURLselectionnerEnBDD()" />
-			</div>
-		</form>
-		<div id="afficherVideosDemandees"></div>
-	</div>
-	<br>
-	<hr>
-	<br>
-	<div>
-		<form method="post">
-			<label for="rechercheAjax">Entrer le titre de la vidéo
-				DAILYMOTION à rechercher</label> <input type="text" id="rechercheAjax"
-				placeholder="Titre à chercher" name="rechercheAjax" required /> <input
-				type="button" value="Cliquez ici" onclick="creerURL()" />
-		</form>
-		<div id="validationMessage"></div>
-	</div>
 
-	<br>
-	<hr>
-	<br>
+	<div>
+		<%
+			if (session.getAttribute("utilisateur") != null) {
+		%>
+		<div>
+			<form method="get">
+				<div>
+					<label for="texteAChercher">Titre de la vidéo</label> <input
+						type="text" id="texteAChercher" placeholder="Titre de la vidéo"
+						name="texteAChercher" required />
+				</div>
+				<div>
+					<input type="button" value="Rechercher la vidéo en base de données"
+						onclick="genererURLselectionnerEnBDD()" />
+				</div>
+			</form>
+			<div id="afficherVideosDemandees"></div>
+		</div>
+		<br>
+		<hr>
+		<br>
+		<div>
+			<form method="post">
+				<label for="rechercheAjax">Entrer le titre de la vidéo
+					DAILYMOTION à rechercher</label> <input type="text" id="rechercheAjax"
+					placeholder="Titre à chercher" name="rechercheAjax" required /> <input
+					type="button" value="Cliquez ici" onclick="creerURL()" />
+			</form>
+			<div id="validationMessage"></div>
+		</div>
 
-	<div id="affichageVideos"></div>
+		<br>
+		<hr>
+		<br>
+
+		<div id="affichageVideos"></div>
+		<%
+			} else {
+		%>
+		<div>
+			
+		</div>
+		<%
+			}
+		%>
+	</div>
 </body>
 
 <script type="text/javascript">
-
-
-	
 	function getFormAsString(nomFormulaire) {
 
 		resultat = "";

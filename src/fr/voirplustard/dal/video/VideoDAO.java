@@ -8,13 +8,15 @@ import fr.voirplustard.bo.Video;
 
 public interface VideoDAO {
 
-	public List<Video> selectionnerParTitre(String titre) throws SQLException, BusinessException;
+	public List<Video> selectionnerParTitre(String titre, int idUtilisateur) throws SQLException, BusinessException;
 	
 	public int chercherMaxId() throws SQLException, BusinessException;
 	
 	public int ajouterVideo(Video video) throws SQLException, BusinessException;
 	
-	public boolean selectionnerParIdVideoDuSite(String id) throws SQLException, BusinessException;
+	public boolean selectionnerParIdVideoDuSite(String id, int idUtilisateur) throws SQLException, BusinessException;
 	
-	public Video selectionnerParId(int id) throws SQLException, BusinessException;
+	public Video selectionnerParId(int id, int idUtilisateur) throws SQLException, BusinessException;
+	
+	public void deleteVideo(int id, int idUtilisateur) throws SQLException, BusinessException;
 }

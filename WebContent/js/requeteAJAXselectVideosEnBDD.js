@@ -29,7 +29,7 @@
 		if (requete.readyState == 4) {
 			if (requete.status == 200) {
 				var resultatSelect = JSON.parse(requete.responseText);
-				document.getElementById("afficherVideosDemandees").innerHTML = renderHTML(resultatSelect);
+				document.getElementById("afficherVideosDemandees").innerHTML = resultatSelect;
 			} else {
 				alert('Une erreur est survenue lors de la mise à jour de la page.'
 						+ '\n\nCode retour = ' + requete.statusText);

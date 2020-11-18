@@ -24,8 +24,8 @@ public class VideoManager {
 		return instanceVideoManager;
 	}
 	
-	public List<Video> selectionnerParTitre(String titre) throws SQLException, BusinessException, Exception {
-		return this.videoDAO.selectionnerParTitre(titre);
+	public List<Video> selectionnerParTitre(String titre, int idUtilisateur) throws SQLException, BusinessException, Exception {
+		return this.videoDAO.selectionnerParTitre(titre, idUtilisateur);
 	}
 	
 	public int chercherMaxId() throws SQLException, BusinessException, Exception {
@@ -36,11 +36,15 @@ public class VideoManager {
 		return this.videoDAO.ajouterVideo(video);
 	}
 	
-	public boolean isVideoDejaPresente(String id) throws SQLException, BusinessException, Exception {
-		return this.videoDAO.selectionnerParIdVideoDuSite(id);
+	public boolean isVideoDejaPresente(String id, int idUtilisateur) throws SQLException, BusinessException, Exception {
+		return this.videoDAO.selectionnerParIdVideoDuSite(id, idUtilisateur);
 	}
 	
-	public Video selectionnerParId(int id) throws SQLException, BusinessException, Exception {
-		return this.videoDAO.selectionnerParId(id);
+	public Video selectionnerParId(int id, int idUtilisateur) throws SQLException, BusinessException, Exception {
+		return this.videoDAO.selectionnerParId(id, idUtilisateur);
+	}
+	
+	public void deleteVideo(int id, int idUtilisateur) throws SQLException, BusinessException, Exception {
+		this.videoDAO.deleteVideo(id, idUtilisateur);
 	}
 }
