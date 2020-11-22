@@ -65,8 +65,13 @@ public class VideoDAOJdbcImpl implements VideoDAO {
 			pstmt = cnx.prepareStatement(SELECT_MAX_ID);
 			ResultSet rs = pstmt.executeQuery();
 			if (rs.next()) {
-				return rs.getInt(1);
+				int i = rs.getInt(1);
+				rs.close();
+				pstmt.close();
+				return i;
 			}
+			rs.close();
+			pstmt.close();
 			return 0;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -95,10 +100,12 @@ public class VideoDAOJdbcImpl implements VideoDAO {
 			pstmt.setInt(9, video.getProprietaire());
 			pstmt.setInt(10, video.getUtilisateur());
 			pstmt.execute();
-			ResultSet rs = pstmt.getGeneratedKeys();
-			if (rs != null && rs.next()) {
-				video.setIdVideo(rs.getInt(1));
-			}
+//			ResultSet rs = pstmt.getGeneratedKeys();
+//			if (rs != null && rs.next()) {
+//				video.setIdVideo(rs.getInt(1));
+//			}
+//			rs.close();
+			pstmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Erreur, échec de la connexion.");
@@ -119,8 +126,12 @@ public class VideoDAOJdbcImpl implements VideoDAO {
 			pstmt.setInt(2, idUtilisateur);
 			ResultSet rs = pstmt.executeQuery();
 			if (rs.next()) {
+				rs.close();
+				pstmt.close();
 				return true;
 			}
+			rs.close();
+			pstmt.close();
 			return false;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -166,7 +177,7 @@ public class VideoDAOJdbcImpl implements VideoDAO {
 	}
 
 	@Override
-	public void deleteVideo(int idVideo, int idUtilisateur) throws SQLException, BusinessException {
+	public boolean deleteVideo(int idVideo, int idUtilisateur) throws SQLException, BusinessException {
 		System.out.println("VideoDAOJdbcImpl - deleteVideo");
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			cnx.setAutoCommit(false);
@@ -177,6 +188,7 @@ public class VideoDAOJdbcImpl implements VideoDAO {
 			pstmt.executeUpdate();
 			pstmt.close();
 			cnx.commit();
+			pstmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Erreur, échec de la connexion.");
@@ -188,5 +200,6 @@ public class VideoDAOJdbcImpl implements VideoDAO {
 			System.out.println("Echec de la suppression de la vidéo.");
 			throw e;
 		}
+		return true;
 	}
 }

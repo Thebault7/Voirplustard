@@ -49,8 +49,13 @@ public class ChannelDAOJdbcImpl implements ChannelDAO {
 			pstmt = cnx.prepareStatement(SELECT_MAX_ID, PreparedStatement.RETURN_GENERATED_KEYS);
 			ResultSet rs = pstmt.executeQuery();
 			if (rs.next()) {
-				return rs.getInt(1);
+				int i = rs.getInt(1);
+				rs.close();
+				pstmt.close();
+				return i;
 			}
+			rs.close();
+			pstmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Erreur, échec de la connexion.");
@@ -75,6 +80,8 @@ public class ChannelDAOJdbcImpl implements ChannelDAO {
 			if (rs != null && rs.next()) {
 				channel.setIdChannel(rs.getInt(1));
 			}
+			rs.close();
+			pstmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Erreur, échec de la connexion.");
@@ -82,7 +89,7 @@ public class ChannelDAOJdbcImpl implements ChannelDAO {
 			// TODO faire remonter l'erreur à l'utilisateur
 			throw e;
 		}
-		return maxIdNumberEnBaseDeDonnées;
+		return maxIdNumberEnBaseDeDonnées + 1;
 	}
 
 	@Override

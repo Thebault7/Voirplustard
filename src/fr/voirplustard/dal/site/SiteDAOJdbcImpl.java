@@ -50,8 +50,13 @@ public class SiteDAOJdbcImpl implements SiteDAO {
 			pstmt = cnx.prepareStatement(SELECT_MAX_ID, PreparedStatement.RETURN_GENERATED_KEYS);
 			ResultSet rs = pstmt.executeQuery();
 			if (rs.next()) {
-				return rs.getInt(1);
+				int i = rs.getInt(1);
+				rs.close();
+				pstmt.close();
+				return i;
 			}
+			rs.close();
+			pstmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Erreur, échec de la connexion.");
@@ -77,6 +82,8 @@ public class SiteDAOJdbcImpl implements SiteDAO {
 			if (rs != null && rs.next()) {
 				site.setidSite(rs.getInt(1));
 			}
+			rs.close();
+			pstmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Erreur, échec de la connexion.");
@@ -84,7 +91,7 @@ public class SiteDAOJdbcImpl implements SiteDAO {
 			// TODO faire remonter l'erreur à l'utilisateur
 			throw e;
 		}
-		return maxIdNumberEnBaseDeDonnées;
+		return maxIdNumberEnBaseDeDonnées + 1;
 	}
 
 	@Override

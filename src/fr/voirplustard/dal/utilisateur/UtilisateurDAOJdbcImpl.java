@@ -91,8 +91,13 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			pstmt = cnx.prepareStatement(SELECT_MAX_ID, PreparedStatement.RETURN_GENERATED_KEYS);
 			ResultSet rs = pstmt.executeQuery();
 			if (rs.next()) {
-				return rs.getInt(1);
+				int i = rs.getInt(1);
+				rs.close();
+				pstmt.close();
+				return i;
 			}
+			rs.close();
+			pstmt.close();
 			return 0;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -121,6 +126,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			if (rs != null && rs.next()) {
 				utilisateur.setIdUtilisateur(rs.getInt(1));
 			}
+			rs.close();
+			pstmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Erreur, échec de la connexion.");
@@ -151,6 +158,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				utilisateur.setAdministrateur(rs.getBoolean(5));
 				utilisateur.setActif(rs.getBoolean(6));
 			}
+			rs.close();
+			pstmt.close();
 			return utilisateur;
 		} catch (SQLException e) {
 			e.printStackTrace();

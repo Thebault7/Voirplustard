@@ -44,7 +44,7 @@ public class VideoManager {
 		return this.videoDAO.selectionnerParId(id, idUtilisateur);
 	}
 	
-	public void deleteVideo(int id, int idUtilisateur) throws SQLException, BusinessException, Exception {
-		this.videoDAO.deleteVideo(id, idUtilisateur);
+	public boolean deleteVideo(int id, int idUtilisateur) throws SQLException, BusinessException, Exception {
+		return this.videoDAO.deleteVideo(id, idUtilisateur);
 	}
 }

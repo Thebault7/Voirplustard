@@ -175,4 +175,24 @@ public class RestApiVideos extends HttpServlet implements Servlet {
 
 		response.getWriter().write("<p>" + message + "</p>");
 	}
+	
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		System.out.println("------------------------REST API doDelete-----------------------");
+		
+		// on cherche l'id de l'utilisateur dans la session
+		HttpSession session = request.getSession();
+		int idUtilisateur = Integer.parseInt(session.getAttribute("idUtilisateur").toString());
+		
+		// on supprime la video
+		VideoManager vm = VideoManager.getInstance();
+		try {
+			boolean suppressionReussie = vm.deleteVideo(Integer.parseInt(request.getParameter("idVideo")), idUtilisateur);
+			if (suppressionReussie) {
+				response.getWriter().write("<p>Suppression de la vidéo réussie</p>");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

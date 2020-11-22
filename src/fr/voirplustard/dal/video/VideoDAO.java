@@ -18,5 +18,5 @@ public interface VideoDAO {
 	
 	public Video selectionnerParId(int id, int idUtilisateur) throws SQLException, BusinessException;
 	
-	public void deleteVideo(int id, int idUtilisateur) throws SQLException, BusinessException;
+	public boolean deleteVideo(int id, int idUtilisateur) throws SQLException, BusinessException;
 }
