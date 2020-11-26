@@ -25,8 +25,6 @@ body {
 	height: 100%;
 }
 
-
-
 /*---------------------------------------------*/
 input {
 	outline: none;
@@ -34,12 +32,12 @@ input {
 }
 
 textarea {
-  outline: none;
-  border: none;
+  	outline: none;
+ 	border: none;
 }
 
 textarea:focus, input:focus {
-  border-color: transparent !important;
+  	border-color: transparent !important;
 }
 
 input:focus::-webkit-input-placeholder { color:transparent; }
@@ -64,11 +62,10 @@ textarea:-ms-input-placeholder { color: #999999;}
 
 
 label {
-  display: block;
-  margin: 0;
+  	display: block;
+  	margin: 0;
 }
 
-/*---------------------------------------------*/
 /*------------------------------------------------------------------
 [ Input ]*/
 
@@ -195,8 +192,6 @@ input.input100 {
   font-size: 13px;
 }
 
-/*==================================================================*/
-
 /*==================================================================
 [ login more ]*/
 .login100-more {
@@ -218,4 +213,21 @@ input.input100 {
   top: 0;
   left: 0;
   background: rgba(0,0,0,0.1);
+}
+
+/*--------------------------------------------------------------------
+[affichage]*/
+
+#containerAffichageBDDetSite {
+	display: flex;
+}
+
+#containerVideoBDD {
+	background-color: red;
+	width: 20%;
+}
+
+#containerVideoSite {
+	background-color: blue;
+	width: 80%;
 }

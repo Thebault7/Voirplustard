@@ -10,10 +10,7 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta charset="UTF-8">
-
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-	integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-	crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
@@ -102,7 +99,8 @@
 			</div>
 			<div id="pageLogin2" class="col-6">
 				<img src="<%=request.getContextPath()%>/img/accueil.jpg"
-					alt="image de la page de connexion" id="imgAccueil" class="login100-more" />
+					alt="image de la page de connexion" id="imgAccueil"
+					class="login100-more" />
 			</div>
 		</div>
 		<%
@@ -113,37 +111,35 @@
 		<%
 			if (session.getAttribute("utilisateur") != null) {
 		%>
-		<div>
-			<div>
-				<label for="texteAChercher">Titre de la vidéo</label> <input
-					type="text" id="texteAChercher" placeholder="Titre de la vidéo"
-					name="texteAChercher"
-					onKeyPress='if(event.keyCode == 13) genererURLselectionnerEnBDD();'
-					required />
+		<div id="containerAffichageBDDetSite">
+			<div id="containerVideoBDD">
+				<div>
+					<label for="texteAChercher">Titre de la vidéo</label> <input
+						type="text" id="texteAChercher" placeholder="Titre de la vidéo"
+						name="texteAChercher"
+						onKeyPress='if(event.keyCode == 13) genererURLselectionnerEnBDD();'
+						required />
+				</div>
+				<div>
+					<input type="button" value="Rechercher la vidéo en base de données"
+						onclick="genererURLselectionnerEnBDD()" />
+				</div>
+				<div id="afficherVideosDemandees"></div>
 			</div>
-			<div>
-				<input type="button" value="Rechercher la vidéo en base de données"
-					onclick="genererURLselectionnerEnBDD()" />
+			<div id="containerVideoSite">
+				<div>
+					<label for="rechercheAjax">Entrer le titre de la vidéo
+						DAILYMOTION à rechercher</label> <input type="text" id="rechercheAjax"
+						placeholder="Titre à chercher" name="rechercheAjax"
+						onKeyPress='if(event.keyCode == 13) creerURL();' required />
+				</div>
+				<div>
+					<input type="button" value="Cliquez ici" onclick="creerURL()" />
+				</div>
+				<div id="validationMessage"></div>
+				<div id="affichageVideos"></div>
 			</div>
-			<div id="afficherVideosDemandees"></div>
 		</div>
-		<br>
-		<hr>
-		<br>
-		<div>
-			<label for="rechercheAjax">Entrer le titre de la vidéo
-				DAILYMOTION à rechercher</label> <input type="text" id="rechercheAjax"
-				placeholder="Titre à chercher" name="rechercheAjax"
-				onKeyPress='if(event.keyCode == 13) creerURL();' required /> <input
-				type="button" value="Cliquez ici" onclick="creerURL()" />
-			<div id="validationMessage"></div>
-		</div>
-
-		<br>
-		<hr>
-		<br>
-
-		<div id="affichageVideos"></div>
 		<%
 			} else {
 		%>
@@ -156,6 +152,14 @@
 
 
 <script type="text/javascript">
+	function sleep(milliseconds) {
+		const date = Date.now();
+		let currentDate = null;
+		do {
+			currentDate = Date.now();
+		} while (currentDate - date < milliseconds);
+	}
+
 	function getFormAsString(nomFormulaire) {
 
 		resultat = "";
@@ -176,5 +180,5 @@
 <script src="js/requeteAJAXenregistrerVideoEnBDD.js"></script>
 <script src="js/requeteAJAXselectVideosEnBDD.js"></script>
 <script src="js/requeteAJAXdeleteVideoEnBDD.js"></script>
-<script src="js/jquery-3.5.1.js"></script>
+<script src="js/affichageAnimation.js"></script>
 </html>

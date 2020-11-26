@@ -81,17 +81,17 @@ function creationAffichageVideos(requete) {
 		proprietaires[count] = requete['list'][count]['channel.name'];
 		ids[count] = requete['list'][count]['id'];
 		
-		affichageVideos += "<h2>Titre : " + requete['list'][count]['title']
+		affichageVideos += "<div><h2 class='affichageSite'>Titre : " + requete['list'][count]['title']
 				+ "</h2><br>";
-		affichageVideos += '<h3><input type="button" value="Enregistrer cette vidéo" onclick="enregistrerVideoParAjax(' + count + ')" /></h3><br>';
-		affichageVideos += "<h3>Description : "
+		affichageVideos += '<h3 class="affichageSite"><input type="button" value="Enregistrer cette vidéo" onclick="enregistrerVideoParAjax(' + count + ')" /></h3><br>';
+		affichageVideos += "<h3 class='affichageSite'>Description : "
 				+ requete['list'][count]['description'] + "</h3><br>";
-		affichageVideos += "<h3>Chaîne : " + requete['list'][count]['channel.name']
+		affichageVideos += "<h3 class='affichageSite'>Chaîne : " + requete['list'][count]['channel.name']
 				+ "</h3><br>";
-		affichageVideos += "<h3>Durée : " + requete['list'][count]['duration']
+		affichageVideos += "<h3 class='affichageSite'>Durée : " + requete['list'][count]['duration']
 				+ " secondes</h3><br>";
-		affichageVideos += '<h3>Lien : <a href="' + requete['list'][count]['url']
-				+ '">' + requete['list'][count]['url'] + '</a></h3><br>';
+		affichageVideos += '<h3 class="affichageSite">Lien : <a href="' + requete['list'][count]['url']
+				+ '">' + requete['list'][count]['url'] + '</a></h3><br></div>';
 	}
 	return affichageVideos;
 }

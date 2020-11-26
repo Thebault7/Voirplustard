@@ -29,12 +29,11 @@ function afficherVideos() {
 	if (requete.readyState == 4) {
 		if (requete.status == 200) {
 			var resultatSelect = JSON.parse(requete.responseText);
-			console.log(requete.responseText);
 			var affichage = "";
 			for (var i = 0; i < resultatSelect.length; i++) {
-				affichage += "<h3>titre : " + resultatSelect[i]['titre']
+				affichage += "<h3 class='affichageBDD'>titre : " + resultatSelect[i]['titre']
 						+ "</h3><br>";
-				affichage += '<h3><input type="button" value="Suprimer cette vidéo" onclick="genererURLdeleteEnBDD('
+				affichage += '<h3 class="affichageBDD"><input type="button" value="Suprimer cette vidéo" onclick="genererURLdeleteEnBDD('
 						+ resultatSelect[i]['idVideo'] + ')"</h3><br>';
 			}
 
